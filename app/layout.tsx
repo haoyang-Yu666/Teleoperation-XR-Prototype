@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Quick Start Profile Prototype",
   description:
-    "An interactive prototype for setting up a credible profile in minutes.",
+    "An interactive Quick Start settings prototype for saving and applying profiles.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
