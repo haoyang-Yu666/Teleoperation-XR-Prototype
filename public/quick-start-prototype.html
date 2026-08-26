@@ -413,6 +413,98 @@
         linear-gradient(45deg, transparent 0 47%, white 48% 60%, transparent 61%);
     }
 
+    .guide-window {
+      width: min(1180px, calc(100vw - 96px));
+      min-height: 760px;
+      padding: 66px 76px 74px;
+      border-radius: 36px;
+      background:
+        radial-gradient(circle at 54% 30%, rgba(92, 78, 64, 0.26), transparent 34%),
+        linear-gradient(135deg, rgba(53, 45, 36, 0.96), rgba(24, 23, 19, 0.96));
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
+    }
+
+    .guide-title {
+      margin: 0 0 78px;
+      text-align: center;
+      font-size: 34px;
+      font-weight: 400;
+    }
+
+    .guide-diagram {
+      position: relative;
+      width: 920px;
+      height: 365px;
+      margin: 0 auto 72px;
+    }
+
+    .guide-controller {
+      position: absolute;
+      top: 60px;
+      width: 190px;
+      height: 270px;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.26));
+    }
+
+    .guide-controller.left {
+      left: 294px;
+    }
+
+    .guide-controller.right {
+      right: 254px;
+    }
+
+    .guide-callout {
+      position: absolute;
+      color: white;
+      font-size: 21px;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+
+    .guide-callout strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 22px;
+      font-weight: 500;
+    }
+
+    .guide-callout span {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .guide-callout.center {
+      text-align: center;
+    }
+
+    .guide-line {
+      position: absolute;
+      height: 0;
+      border-top: 2px dashed rgba(255, 255, 255, 0.8);
+      transform-origin: left center;
+    }
+
+    .guide-line::after {
+      content: "";
+      position: absolute;
+      right: -3px;
+      top: -4px;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .guide-footnotes {
+      display: grid;
+      gap: 22px;
+      justify-items: center;
+      color: white;
+      font-size: 22px;
+      line-height: 1.4;
+    }
+
     .shell {
       width: min(1280px, calc(100vw - 56px));
       height: min(860px, calc(100vh - 56px));
@@ -1487,6 +1579,76 @@
       </div>
     </section>
 
+    <section class="vr-window guide-window closed" id="guideWindow" aria-label="Controller guide draggable window">
+      <h1 class="guide-title">Controller Guide</h1>
+
+      <div class="guide-diagram" aria-label="Controller guide diagram">
+        <img class="guide-controller left" src="/assets/setting-bar/guide-left-controller.png" alt="" />
+        <img class="guide-controller right" src="/assets/setting-bar/guide-right-controller.png" alt="" />
+
+        <div class="guide-callout" style="left: 0; top: 12px; text-align: right;">
+          <strong>Left joystick</strong>
+          <span>Move Forward / Back<br />Turn Left / Right</span>
+        </div>
+        <span class="guide-line" style="left: 132px; top: 28px; width: 210px; transform: rotate(0deg);"></span>
+        <span class="guide-line" style="left: 342px; top: 28px; width: 70px; transform: rotate(64deg);"></span>
+
+        <div class="guide-callout" style="left: 38px; top: 108px; text-align: right;">
+          <strong>Button Y</strong>
+          <span>Start / Stop Recording</span>
+        </div>
+        <span class="guide-line" style="left: 146px; top: 122px; width: 144px;"></span>
+
+        <div class="guide-callout" style="left: 56px; top: 202px; text-align: right;">
+          <strong>Button X</strong>
+          <span>Save Recording</span>
+        </div>
+        <span class="guide-line" style="left: 134px; top: 214px; width: 118px;"></span>
+        <span class="guide-line" style="left: 252px; top: 214px; width: 45px; transform: rotate(-36deg);"></span>
+
+        <div class="guide-callout center" style="left: 406px; top: 84px;">
+          <strong>Trigger</strong>
+        </div>
+        <span class="guide-line" style="left: 356px; top: 104px; width: 206px;"></span>
+
+        <div class="guide-callout center" style="left: 428px; top: 284px;">
+          <strong>Grip</strong>
+        </div>
+        <span class="guide-line" style="left: 348px; top: 286px; width: 136px; transform: rotate(27deg);"></span>
+        <span class="guide-line" style="left: 484px; top: 286px; width: 148px; transform: rotate(-24deg);"></span>
+
+        <div class="guide-callout" style="right: 0; top: 16px;">
+          <strong>Right joystick</strong>
+          <span>Lift / Lower Robot</span>
+        </div>
+        <span class="guide-line" style="left: 646px; top: 32px; width: 134px; transform: rotate(0deg);"></span>
+        <span class="guide-line" style="left: 604px; top: 86px; width: 62px; transform: rotate(-54deg);"></span>
+
+        <div class="guide-callout" style="right: 0; top: 112px;">
+          <strong>Button B</strong>
+          <span>Reset Arm Position</span>
+        </div>
+        <span class="guide-line" style="left: 616px; top: 124px; width: 198px;"></span>
+
+        <div class="guide-callout" style="right: 0; top: 204px;">
+          <strong>Button A</strong>
+          <span>label recording<br />Tap once : qualified<br />twice : unqualified</span>
+        </div>
+        <span class="guide-line" style="left: 618px; top: 222px; width: 78px; transform: rotate(42deg);"></span>
+        <span class="guide-line" style="left: 696px; top: 282px; width: 100px;"></span>
+      </div>
+
+      <div class="guide-footnotes">
+        <div>Grip: Press to start remote control. Release to end remote control.</div>
+        <div>Trigger: Press to close gripper. Release to release gripper.</div>
+      </div>
+
+      <div class="drag-zone" data-drag-handle="guideWindow" aria-label="Drag controller guide window">
+        <button class="drag-close" data-close-window="guideWindow" type="button" aria-label="Close controller guide window"></button>
+        <span class="drag-line" data-drag-line="guideWindow"></span>
+      </div>
+    </section>
+
     <section class="vr-window closed" id="settingsWindow" aria-label="Settings draggable window">
       <div class="shell">
         <aside class="sidebar">
@@ -1724,6 +1886,7 @@
     const languageLabel = document.getElementById("languageLabel");
     const welcomeWindow = document.getElementById("welcomeWindow");
     const welcomeStartBtn = document.getElementById("welcomeStartBtn");
+    const guideWindow = document.getElementById("guideWindow");
     const settingsWindow = document.getElementById("settingsWindow");
     const aboutNav = document.getElementById("aboutNav");
     const vstSwitch = document.getElementById("vstSwitch");
@@ -1731,6 +1894,8 @@
     const barQuickStart = document.getElementById("barQuickStart");
     const barVst = document.getElementById("barVst");
     const barVstIcon = document.getElementById("barVstIcon");
+    const barGuide = document.getElementById("barGuide");
+    const barGuideIcon = document.querySelector("#barGuide img");
     const trackerNumbersRow = document.getElementById("trackerNumbersRow");
     const trackerFixedValue = document.getElementById("trackerFixedValue");
     const trackerSelect = document.getElementById("trackerSelect");
@@ -1912,6 +2077,9 @@
         barSettings.classList.remove("active");
         barQuickStart.classList.remove("active");
       }
+      if (id === "guideWindow") {
+        setGuideState(false);
+      }
     }
 
     function dismissWelcome(openSettingsAfter = false) {
@@ -1924,6 +2092,12 @@
     function setVstState(on) {
       vstSwitch.classList.toggle("on", on);
       barVstIcon.src = on ? "/assets/setting-bar/vst-on.png" : "/assets/setting-bar/vst-off.png";
+    }
+
+    function setGuideState(open) {
+      guideWindow.classList.toggle("closed", !open);
+      barGuide.classList.toggle("active", open);
+      barGuideIcon.src = open ? "/assets/setting-bar/guide-open.png" : "/assets/setting-bar/guide.png";
     }
 
     function setLanguage(lang) {
@@ -2005,7 +2179,7 @@
     barSettings.addEventListener("click", toggleSettingsPanel);
     barQuickStart.addEventListener("click", () => openSettings("quickStart"));
     barVst.addEventListener("click", () => setVstState(!vstSwitch.classList.contains("on")));
-    document.getElementById("barGuide").addEventListener("click", () => showToast("success", "Guide opened"));
+    barGuide.addEventListener("click", () => setGuideState(guideWindow.classList.contains("closed")));
     document.getElementById("barScene").addEventListener("click", () => showToast("success", "Scene opened"));
     document.getElementById("barExit").addEventListener("click", () => showToast("success", "Exit selected"));
 
@@ -2103,7 +2277,9 @@
 
     makeDraggable(settingsWindow);
     makeDraggable(welcomeWindow);
+    makeDraggable(guideWindow);
     setVstState(true);
+    setGuideState(false);
     renderProfiles();
     updateSaveButton();
   </script>
