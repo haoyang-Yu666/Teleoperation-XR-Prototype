@@ -73,174 +73,45 @@
 
     .vr-hud {
       position: absolute;
-      top: 82px;
+      top: 40px;
       left: 50%;
       z-index: 40;
       display: grid;
       justify-items: center;
-      gap: 14px;
+      gap: 8px;
       transform: translateX(-50%);
       pointer-events: none;
     }
 
     .status-strip {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 28px;
-      color: white;
-      font-size: 39px;
-      line-height: 1;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.38);
-    }
-
-    .status-group {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 0;
-    }
-
-    .wifi-icon {
-      position: relative;
-      width: 48px;
-      height: 36px;
-    }
-
-    .wifi-icon::before,
-    .wifi-icon::after,
-    .wifi-dot {
-      content: "";
-      position: absolute;
-      left: 50%;
-      border: 6px solid white;
-      border-bottom: 0;
-      border-left-color: transparent;
-      border-right-color: transparent;
-      transform: translateX(-50%);
-    }
-
-    .wifi-icon::before {
-      top: 0;
-      width: 43px;
-      height: 20px;
-      border-radius: 42px 42px 0 0;
-    }
-
-    .wifi-icon::after {
-      top: 12px;
-      width: 25px;
-      height: 13px;
-      border-radius: 26px 26px 0 0;
-    }
-
-    .wifi-dot {
-      bottom: 0;
-      width: 10px;
-      height: 10px;
-      border: 0;
-      border-radius: 999px;
-      background: white;
-    }
-
-    .controller-mini {
-      position: relative;
-      width: 36px;
-      height: 34px;
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
-    }
-
-    .controller-mini::before {
-      content: "";
-      position: absolute;
-      left: 5px;
-      top: 7px;
-      width: 26px;
-      height: 18px;
-      border: 5px solid white;
-      border-radius: 12px 12px 15px 15px;
-      transform: rotate(-18deg);
-    }
-
-    .controller-mini::after {
-      content: "";
-      position: absolute;
-      left: 16px;
-      top: 10px;
-      width: 5px;
-      height: 5px;
-      border-radius: 999px;
-      background: white;
-    }
-
-    .battery-icon {
-      position: relative;
-      width: 64px;
-      height: 34px;
-      border: 5px solid white;
-      border-radius: 6px;
-      padding: 4px;
-    }
-
-    .battery-icon::after {
-      content: "";
-      position: absolute;
-      right: -10px;
-      top: 8px;
-      width: 6px;
-      height: 14px;
-      border-radius: 0 4px 4px 0;
-      background: white;
-    }
-
-    .battery-fill {
+      width: 442px;
+      height: auto;
       display: block;
-      height: 100%;
-      border-radius: 2px;
-      background: #f1ca55;
-    }
-
-    .battery-fill.full {
-      width: 78%;
-      background: white;
-    }
-
-    .battery-fill.low {
-      width: 42%;
-    }
-
-    .headset-icon {
-      width: 62px;
-      height: 38px;
-      border-radius: 18px 18px 12px 12px;
-      background: white;
-      box-shadow:
-        -9px 2px 0 -2px white,
-        9px 2px 0 -2px white;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 11px rgba(0, 0, 0, 0.4));
     }
 
     .setting-bar {
       display: flex;
       align-items: center;
-      gap: 22px;
-      width: 1180px;
+      justify-content: space-between;
+      gap: 0;
+      width: 852px;
       max-width: calc(100vw - 96px);
-      min-height: 156px;
-      padding: 22px 88px;
-      border-radius: 96px;
-      background: rgba(40, 34, 28, 0.94);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+      height: 118px;
+      padding: 0 73px;
+      border-radius: 64px;
+      background: rgba(35, 29, 24, 0.91);
+      box-shadow: 0 20px 62px rgba(0, 0, 0, 0.28);
       pointer-events: auto;
     }
 
     .bar-button {
       position: relative;
-      width: 126px;
-      min-height: 112px;
+      width: 72px;
+      height: 72px;
       display: grid;
       place-items: center;
-      align-content: center;
-      gap: 15px;
       border: 0;
       border-radius: 999px;
       background: transparent;
@@ -250,86 +121,85 @@
     .bar-button::before {
       content: "";
       position: absolute;
-      width: 110px;
-      height: 110px;
-      top: 0;
+      width: 82px;
+      height: 82px;
+      top: 50%;
       left: 50%;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0);
-      transform: translateX(-50%) scale(0.74);
+      transform: translate(-50%, -50%) scale(0.78);
       transition: background 160ms ease, transform 160ms ease;
     }
 
     .bar-button:hover::before,
     .bar-button.active::before {
-      background: rgba(255, 255, 255, 0.07);
-      transform: translateX(-50%) scale(1);
+      background: rgba(255, 255, 255, 0.08);
+      transform: translate(-50%, -50%) scale(1);
     }
 
     .bar-icon {
       position: relative;
-      width: 56px;
-      height: 56px;
+      width: 44px;
+      height: 44px;
       color: white;
       object-fit: contain;
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     }
 
     .bar-label {
-      position: relative;
-      color: white;
-      font-size: 23px;
-      line-height: 1;
-      opacity: 0;
+      display: none;
     }
 
-    .bar-button.active .bar-label {
-      opacity: 1;
-    }
-
-    .play-icon {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      border: 5px solid white;
+    .quick-icon {
+      width: 49px;
+      height: 49px;
       border-radius: 999px;
       background:
-        linear-gradient(90deg, transparent 0 38%, white 38% 48%, transparent 48%),
-        linear-gradient(32deg, transparent 0 38%, white 38% 49%, transparent 49%),
-        linear-gradient(-32deg, transparent 0 38%, white 38% 49%, transparent 49%);
+        radial-gradient(circle, transparent 0 12px, #fff 13px 16px, transparent 17px),
+        conic-gradient(from -90deg, #fff 0 18deg, transparent 18deg 60deg, #fff 60deg 78deg, transparent 78deg 120deg, #fff 120deg 138deg, transparent 138deg 180deg, #fff 180deg 198deg, transparent 198deg 240deg, #fff 240deg 258deg, transparent 258deg 300deg, #fff 300deg 318deg, transparent 318deg 360deg);
+    }
+
+    .settings-icon {
+      width: 43px;
+      height: 43px;
+    }
+
+    .vst-icon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .guide-icon {
+      width: 47px;
+      height: 47px;
+    }
+
+    .exit-icon {
+      width: 46px;
+      height: 46px;
     }
 
     .icon-scene::before {
       content: "";
       position: absolute;
       left: 4px;
-      top: 11px;
-      width: 36px;
-      height: 30px;
-      border: 5px solid white;
-      border-radius: 8px;
+      top: 10px;
+      width: 33px;
+      height: 25px;
+      border: 4px solid white;
+      border-radius: 7px;
     }
 
     .icon-scene::after {
       content: "";
       position: absolute;
-      right: 0;
-      top: 17px;
-      width: 14px;
-      height: 20px;
-      border: 5px solid white;
+      right: 3px;
+      top: 15px;
+      width: 10px;
+      height: 16px;
+      border: 4px solid white;
       border-left: 0;
-      border-radius: 0 8px 8px 0;
-    }
-
-    .icon-exit::before {
-      content: "↪";
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      font-size: 58px;
-      line-height: 1;
+      border-radius: 0 7px 7px 0;
     }
 
     .vr-window {
@@ -989,47 +859,26 @@
 <body>
   <main class="stage">
     <section class="vr-hud" aria-label="Application status and setting bar">
-      <div class="status-strip" aria-label="Status bar">
-        <div class="status-group">
-          <span>11:00</span>
-          <span class="wifi-icon" aria-label="Wi-Fi"><span class="wifi-dot"></span></span>
-        </div>
-        <div class="status-group">
-          <span class="controller-mini" aria-label="Left controller"></span>
-          <span class="battery-icon" aria-label="Left controller battery"><span class="battery-fill low"></span></span>
-          <span class="controller-mini" aria-label="Right controller"></span>
-          <span class="battery-icon" aria-label="Right controller battery"><span class="battery-fill full"></span></span>
-        </div>
-        <div class="status-group">
-          <span class="headset-icon" aria-label="Headset battery"></span>
-          <span>54%</span>
-        </div>
-      </div>
+      <img class="status-strip" src="/assets/setting-bar/status-strip.png" alt="11:00 Wi-Fi 54% controller and headset status" />
 
       <nav class="setting-bar" aria-label="Application setting bar">
         <button class="bar-button active" id="barSettings" type="button" aria-label="Settings">
-          <img class="bar-icon" src="/assets/setting-bar/settings.png" alt="" />
-          <span class="bar-label">Settings</span>
+          <img class="bar-icon settings-icon" src="/assets/setting-bar/settings.png" alt="" />
         </button>
         <button class="bar-button" id="barQuickStart" type="button" aria-label="Quick Start">
-          <span class="bar-icon play-icon" aria-hidden="true"></span>
-          <span class="bar-label">Quick Start</span>
+          <span class="bar-icon quick-icon" aria-hidden="true"></span>
         </button>
         <button class="bar-button" id="barVst" type="button" aria-label="VST">
-          <img class="bar-icon" id="barVstIcon" src="/assets/setting-bar/vst-on.png" alt="" />
-          <span class="bar-label">VST</span>
+          <img class="bar-icon vst-icon" id="barVstIcon" src="/assets/setting-bar/vst-on.png" alt="" />
         </button>
         <button class="bar-button" id="barGuide" type="button" aria-label="Guide">
-          <img class="bar-icon" src="/assets/setting-bar/guide.png" alt="" />
-          <span class="bar-label">Guide</span>
+          <img class="bar-icon guide-icon" src="/assets/setting-bar/guide.png" alt="" />
         </button>
         <button class="bar-button" id="barScene" type="button" aria-label="Scene">
           <span class="bar-icon icon-scene" aria-hidden="true"></span>
-          <span class="bar-label">Scene</span>
         </button>
         <button class="bar-button" id="barExit" type="button" aria-label="Exit">
-          <img class="bar-icon" src="/assets/setting-bar/exit-vector.png" alt="" />
-          <span class="bar-label">Exit</span>
+          <img class="bar-icon exit-icon" src="/assets/setting-bar/exit-vector.png" alt="" />
         </button>
       </nav>
     </section>
