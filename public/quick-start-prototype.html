@@ -226,10 +226,6 @@
     .quick-icon {
       width: 49px;
       height: 49px;
-      border-radius: 999px;
-      background:
-        radial-gradient(circle, transparent 0 12px, #fff 13px 16px, transparent 17px),
-        conic-gradient(from -90deg, #fff 0 18deg, transparent 18deg 60deg, #fff 60deg 78deg, transparent 78deg 120deg, #fff 120deg 138deg, transparent 138deg 180deg, #fff 180deg 198deg, transparent 198deg 240deg, #fff 240deg 258deg, transparent 258deg 300deg, #fff 300deg 318deg, transparent 318deg 360deg);
     }
 
     .settings-icon {
@@ -953,7 +949,7 @@
           <img class="bar-icon settings-icon" src="/assets/setting-bar/settings.png" alt="" />
         </button>
         <button class="bar-button" id="barQuickStart" type="button" aria-label="Quick Start">
-          <span class="bar-icon quick-icon" aria-hidden="true"></span>
+          <img class="bar-icon quick-icon" src="/assets/setting-bar/quick-start-play.png" alt="" />
         </button>
         <button class="bar-button" id="barVst" type="button" aria-label="VST">
           <img class="bar-icon vst-icon" id="barVstIcon" src="/assets/setting-bar/vst-on.png" alt="" />
@@ -1278,6 +1274,14 @@
       setActiveView(view);
     }
 
+    function toggleSettingsPanel() {
+      if (settingsWindow.classList.contains("closed")) {
+        openSettings("general");
+        return;
+      }
+      closeWindow("settingsWindow");
+    }
+
     function closeWindow(id) {
       const target = document.getElementById(id);
       target.classList.add(id === "performanceWindow" ? "hidden" : "closed");
@@ -1354,7 +1358,7 @@
       item.addEventListener("click", () => setActiveView(item.dataset.view));
     });
 
-    barSettings.addEventListener("click", () => openSettings("general"));
+    barSettings.addEventListener("click", toggleSettingsPanel);
     barQuickStart.addEventListener("click", () => openSettings("quickStart"));
     barVst.addEventListener("click", () => setVstState(!vstSwitch.classList.contains("on")));
     document.getElementById("barGuide").addEventListener("click", () => showToast("success", "Guide opened"));
