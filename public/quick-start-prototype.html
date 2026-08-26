@@ -3,26 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quick Start Profile Prototype</title>
+  <title>Settings Prototype</title>
   <style>
     :root {
-      --panel: rgba(38, 32, 25, 0.91);
-      --panel-strong: rgba(24, 21, 17, 0.82);
-      --panel-soft: rgba(255, 255, 255, 0.055);
+      --panel: rgba(38, 32, 25, 0.92);
+      --panel-strong: rgba(24, 21, 17, 0.84);
+      --panel-soft: rgba(255, 255, 255, 0.08);
       --line: rgba(255, 255, 255, 0.08);
       --text: rgba(255, 255, 255, 0.94);
-      --muted: rgba(255, 255, 255, 0.58);
-      --muted-2: rgba(255, 255, 255, 0.36);
+      --muted: rgba(255, 255, 255, 0.62);
+      --muted-2: rgba(255, 255, 255, 0.4);
       --blue: #6fa9df;
       --blue-strong: #77b8f2;
-      --green: #7ee56f;
+      --green: #68d257;
       --red: #f14535;
-      --button-gray: rgba(125, 118, 108, 0.72);
-      --row: rgba(20, 18, 15, 0.42);
+      --button-gray: rgba(125, 118, 108, 0.76);
+      --row: rgba(20, 18, 15, 0.48);
+      --handle: rgba(152, 150, 147, 0.88);
     }
 
     * {
       box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
     }
 
     body {
@@ -34,6 +41,7 @@
       background:
         linear-gradient(rgba(52, 47, 41, 0.28), rgba(52, 47, 41, 0.28)),
         linear-gradient(90deg, #2d2722 0 8%, #84786d 8% 13%, #b2a69a 13% 28%, #5d5046 28% 32%, #887b70 32% 47%, #a79b90 47% 62%, #322d28 62% 70%, #7b6c60 70% 100%);
+      user-select: none;
     }
 
     body::before {
@@ -48,16 +56,30 @@
       pointer-events: none;
     }
 
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      color: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     .stage {
       position: relative;
-      display: grid;
-      place-items: center;
       min-height: 100vh;
-      padding: 28px;
+    }
+
+    .vr-window {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      touch-action: none;
     }
 
     .shell {
-      position: relative;
       width: min(1280px, calc(100vw - 56px));
       height: min(860px, calc(100vh - 56px));
       min-height: 760px;
@@ -115,9 +137,13 @@
       align-items: center;
       gap: 20px;
       padding: 0 24px;
+      border: 0;
       border-radius: 17px;
       color: rgba(255, 255, 255, 0.92);
       font-size: 27px;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
     }
 
     .nav-item.active {
@@ -174,7 +200,7 @@
     }
 
     .page-title {
-      margin: 0 0 28px;
+      margin: 0 0 44px;
       text-align: center;
       font-size: 34px;
       font-weight: 500;
@@ -186,11 +212,151 @@
       margin: 0 auto;
     }
 
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .hidden {
+      display: none;
+    }
+
     .section-label {
       margin: 0 0 14px 24px;
       font-size: 24px;
       font-weight: 500;
       color: rgba(255, 255, 255, 0.92);
+    }
+
+    .settings-list {
+      display: grid;
+      gap: 34px;
+    }
+
+    .setting-row {
+      min-height: 74px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      padding: 0 30px;
+      border: 0;
+      border-radius: 22px;
+      color: rgba(255, 255, 255, 0.94);
+      background: var(--row);
+      text-align: left;
+      font-size: 27px;
+    }
+
+    button.setting-row {
+      cursor: pointer;
+    }
+
+    .chevron {
+      font-size: 46px;
+      line-height: 1;
+      transform: translateY(-2px);
+    }
+
+    .switch {
+      width: 64px;
+      height: 34px;
+      border: 0;
+      border-radius: 999px;
+      padding: 3px;
+      background: rgba(130, 126, 120, 0.75);
+      cursor: pointer;
+    }
+
+    .switch::before {
+      content: "";
+      display: block;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: white;
+      transition: transform 160ms ease;
+    }
+
+    .switch.on {
+      background: var(--green);
+    }
+
+    .switch.on::before {
+      transform: translateX(30px);
+    }
+
+    .field-pill {
+      min-width: 150px;
+      height: 52px;
+      border: 0;
+      outline: none;
+      border-radius: 20px;
+      padding: 0 22px;
+      color: white;
+      background: var(--button-gray);
+      text-align: center;
+      font-size: 26px;
+    }
+
+    .field-pill:focus {
+      box-shadow: 0 0 0 3px rgba(111, 169, 223, 0.35);
+    }
+
+    .language-control {
+      position: relative;
+      display: grid;
+      justify-items: end;
+    }
+
+    .language-button {
+      min-width: 196px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border: 0;
+      border-radius: 20px;
+      padding: 0 18px 0 28px;
+      color: white;
+      background: var(--button-gray);
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .language-menu {
+      position: absolute;
+      right: 0;
+      top: 64px;
+      z-index: 20;
+      width: 196px;
+      overflow: hidden;
+      border-radius: 28px;
+      background: rgba(96, 90, 84, 0.98);
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.26);
+    }
+
+    .language-option {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 0;
+      padding: 0 20px;
+      color: white;
+      background: transparent;
+      font-size: 22px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .language-option.active {
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .current-card,
@@ -224,6 +390,7 @@
       text-align: center;
       font: inherit;
       font-size: 24px;
+      user-select: text;
     }
 
     .profile-input:focus {
@@ -252,6 +419,7 @@
       cursor: pointer;
       transition: transform 0.12s ease, opacity 0.12s ease, background 0.12s ease;
       background: var(--button-gray);
+      white-space: nowrap;
     }
 
     .btn:hover {
@@ -309,20 +477,6 @@
       margin-right: -12px;
       scrollbar-width: thin;
       scrollbar-color: rgba(255, 255, 255, 0.52) rgba(0, 0, 0, 0.55);
-    }
-
-    .saved-list-wrap::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    .saved-list-wrap::-webkit-scrollbar-track {
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.55);
-    }
-
-    .saved-list-wrap::-webkit-scrollbar-thumb {
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.52);
     }
 
     .profiles {
@@ -388,7 +542,7 @@
       position: absolute;
       top: 24px;
       left: 50%;
-      z-index: 10;
+      z-index: 30;
       display: grid;
       gap: 14px;
       transform: translateX(-50%);
@@ -430,6 +584,92 @@
     .toast.error .toast-icon {
       color: white;
       background: var(--red);
+    }
+
+    .drag-zone {
+      position: absolute;
+      left: 50%;
+      bottom: -26px;
+      width: 370px;
+      height: 86px;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      padding: 0 28px;
+      transform: translateX(-50%);
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .drag-zone:active {
+      cursor: grabbing;
+    }
+
+    .drag-dot {
+      width: 29px;
+      height: 29px;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: var(--handle);
+    }
+
+    .drag-line {
+      height: 18px;
+      flex: 1;
+      border-radius: 999px;
+      background: var(--handle);
+    }
+
+    .floating {
+      z-index: 15;
+      width: 480px;
+      min-height: 530px;
+      border-radius: 38px;
+      padding: 34px 38px 92px;
+      background: rgba(55, 47, 39, 0.97);
+      box-shadow: 0 28px 86px rgba(0, 0, 0, 0.34);
+    }
+
+    .floating.hidden {
+      display: none;
+    }
+
+    .floating h2 {
+      margin: 0 0 38px;
+      font-size: 31px;
+      font-weight: 500;
+    }
+
+    .perf-section {
+      margin-top: 22px;
+    }
+
+    .perf-heading {
+      margin: 0 0 16px;
+      font-size: 23px;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      align-items: center;
+      gap: 8px;
+      min-height: 43px;
+      font-size: 24px;
+    }
+
+    .metric-icon {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 18px;
+    }
+
+    .metric-value {
+      min-width: 72px;
+      text-align: right;
     }
 
     @keyframes toastIn {
@@ -477,62 +717,136 @@
 </head>
 <body>
   <main class="stage">
-    <section class="shell" aria-label="Quick Start profile prototype">
-      <aside class="sidebar">
-        <div class="brand">
-          <div class="logo" aria-hidden="true">
-            <svg viewBox="0 0 96 96" fill="none" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M34 15 20 23v21L10 50v24l20 11 16-9V56l13-8V24L45 15H34Z" />
-              <path d="M62 81 76 73V52l10-6V22L66 11 50 20v20L37 48v24l14 9h11Z" />
-              <path d="M30 50 48 40" />
-              <path d="M49 56 66 46" />
-              <circle cx="50" cy="39" r="5" fill="white" stroke="white" />
-              <circle cx="47" cy="57" r="5" fill="white" stroke="white" />
-            </svg>
-          </div>
-          <div class="brand-title">Settings</div>
-        </div>
-
-        <nav class="nav" aria-label="Settings sections">
-          <div class="nav-item"><span class="nav-icon">⚙</span><span>General</span></div>
-          <div class="nav-item"><span class="nav-icon">◔</span><span>Tracking</span></div>
-          <div class="nav-item"><span class="nav-icon">▣</span><span>Video</span></div>
-          <div class="nav-item active"><span class="nav-icon">▷</span><span>Quick Start</span></div>
-        </nav>
-
-        <div class="about">
-          <span class="about-icon">i</span>
-          <span>About Us</span>
-        </div>
-      </aside>
-
-      <section class="main">
-        <div class="toast-layer" id="toastLayer" aria-live="polite"></div>
-
-        <h1 class="page-title">Quick Start</h1>
-
-        <div class="content">
-          <p class="section-label">Current Configuration</p>
-          <section class="current-card">
-            <div class="current-top">
-              <input class="profile-input" id="currentName" value="Unsaved Profile" aria-label="Current profile name" />
-              <button class="btn primary" id="saveBtn" type="button">Save As Profile</button>
+    <section class="vr-window" id="settingsWindow" aria-label="Settings draggable window">
+      <div class="shell">
+        <aside class="sidebar">
+          <div class="brand">
+            <div class="logo" aria-hidden="true">
+              <svg viewBox="0 0 96 96" fill="none" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M34 15 20 23v21L10 50v24l20 11 16-9V56l13-8V24L45 15H34Z" />
+                <path d="M62 81 76 73V52l10-6V22L66 11 50 20v20L37 48v24l14 9h11Z" />
+                <path d="M30 50 48 40" />
+                <path d="M49 56 66 46" />
+                <circle cx="50" cy="39" r="5" fill="white" stroke="white" />
+                <circle cx="47" cy="57" r="5" fill="white" stroke="white" />
+              </svg>
             </div>
-            <div class="meta" id="currentMeta">Independent · 4 Trackers&nbsp;&nbsp;|&nbsp;&nbsp;3 Streams · MJPEG · Full</div>
-          </section>
-
-          <div class="saved-header">
-            <p class="section-label" style="margin-bottom:0">Saved Profiles</p>
-            <span class="count-label" id="profileCount">0 saved</span>
+            <div class="brand-title" data-i18n="settings">Settings</div>
           </div>
 
-          <section class="saved-list-wrap" aria-label="Saved profile list">
-            <div class="profiles" id="profiles"></div>
-          </section>
-        </div>
+          <nav class="nav" aria-label="Settings sections">
+            <button class="nav-item" data-view="general" type="button"><span class="nav-icon">⚙</span><span data-i18n="general">General</span></button>
+            <button class="nav-item" data-view="tracking" type="button"><span class="nav-icon">◔</span><span>Tracking</span></button>
+            <button class="nav-item" data-view="video" type="button"><span class="nav-icon">▣</span><span>Video</span></button>
+            <button class="nav-item active" data-view="quickStart" type="button"><span class="nav-icon">▷</span><span>Quick Start</span></button>
+          </nav>
 
-        <button class="btn primary quick-start-fixed" id="quickStartBtn" type="button">Quick Start</button>
-      </section>
+          <div class="about">
+            <span class="about-icon">i</span>
+            <span data-i18n="about">About Us</span>
+          </div>
+        </aside>
+
+        <section class="main">
+          <div class="toast-layer" id="toastLayer" aria-live="polite"></div>
+
+          <section class="view" id="generalView">
+            <h1 class="page-title" data-i18n="general">General</h1>
+            <div class="content">
+              <div class="settings-list">
+                <div class="setting-row" id="performanceRow" role="button" tabindex="0">
+                  <span data-i18n="performancePanel">Performance Panel</span>
+                  <button class="switch on" id="performanceSwitch" aria-label="Toggle performance panel" type="button"></button>
+                </div>
+
+                <div class="setting-row">
+                  <span data-i18n="buttonMappingHints">Button Mapping Hints</span>
+                  <button class="switch on" aria-label="Toggle button mapping hints" type="button"></button>
+                </div>
+
+                <div class="setting-row">
+                  <span>VST</span>
+                  <button class="switch on" aria-label="Toggle VST" type="button"></button>
+                </div>
+
+                <button class="setting-row" type="button">
+                  <span data-i18n="ipd">Interpupillary Distance</span>
+                  <span class="chevron">›</span>
+                </button>
+
+                <div class="setting-row">
+                  <span data-i18n="polling">Polling frequency</span>
+                  <input class="field-pill" id="pollingInput" value="200Hz" aria-label="Polling frequency" />
+                </div>
+
+                <div class="setting-row">
+                  <span data-i18n="language">Language</span>
+                  <div class="language-control">
+                    <button class="language-button" id="languageButton" type="button">
+                      <span id="languageLabel">English</span>
+                      <span>⌄</span>
+                    </button>
+                    <div class="language-menu hidden" id="languageMenu">
+                      <button class="language-option active" data-lang="en" type="button"><span>English</span><span>✓</span></button>
+                      <button class="language-option" data-lang="zh" type="button"><span>简体中文</span><span></span></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="view active" id="quickStartView">
+            <h1 class="page-title">Quick Start</h1>
+
+            <div class="content">
+              <p class="section-label">Current Configuration</p>
+              <section class="current-card">
+                <div class="current-top">
+                  <input class="profile-input" id="currentName" value="Unsaved Profile" aria-label="Current profile name" />
+                  <button class="btn primary" id="saveBtn" type="button">Save As Profile</button>
+                </div>
+                <div class="meta" id="currentMeta">Independent · 4 Trackers&nbsp;&nbsp;|&nbsp;&nbsp;3 Streams · MJPEG · Full</div>
+              </section>
+
+              <div class="saved-header">
+                <p class="section-label" style="margin-bottom:0">Saved Profiles</p>
+                <span class="count-label" id="profileCount">0 saved</span>
+              </div>
+
+              <section class="saved-list-wrap" aria-label="Saved profile list">
+                <div class="profiles" id="profiles"></div>
+              </section>
+            </div>
+
+            <button class="btn primary quick-start-fixed" id="quickStartBtn" type="button">Quick Start</button>
+          </section>
+        </section>
+      </div>
+
+      <div class="drag-zone" data-drag-handle="settingsWindow" aria-label="Drag settings window">
+        <span class="drag-dot"></span>
+        <span class="drag-line"></span>
+      </div>
+    </section>
+
+    <section class="vr-window floating hidden" id="performanceWindow" aria-label="Performance draggable window">
+      <h2>Performance</h2>
+      <div class="perf-section">
+        <p class="perf-heading">Resource Usage</p>
+        <div class="metric-row"><span class="metric-icon">▣</span><span>CPU</span><span class="metric-value">40%</span></div>
+        <div class="metric-row"><span class="metric-icon">▤</span><span>GPU</span><span class="metric-value">60%</span></div>
+        <div class="metric-row"><span class="metric-icon">▦</span><span>Memory</span><span class="metric-value">80%</span></div>
+      </div>
+      <div class="perf-section">
+        <p class="perf-heading">System status</p>
+        <div class="metric-row"><span></span><span>FPS</span><span class="metric-value">72Hz</span></div>
+        <div class="metric-row"><span></span><span>Latency</span><span class="metric-value">23ms</span></div>
+      </div>
+      <div class="drag-zone" data-drag-handle="performanceWindow" aria-label="Drag performance panel">
+        <span class="drag-dot"></span>
+        <span class="drag-line"></span>
+      </div>
     </section>
   </main>
 
@@ -543,6 +857,11 @@
     const profileCount = document.getElementById("profileCount");
     const toastLayer = document.getElementById("toastLayer");
     const quickStartBtn = document.getElementById("quickStartBtn");
+    const languageButton = document.getElementById("languageButton");
+    const languageMenu = document.getElementById("languageMenu");
+    const languageLabel = document.getElementById("languageLabel");
+    const performanceWindow = document.getElementById("performanceWindow");
+    const performanceSwitch = document.getElementById("performanceSwitch");
 
     const details = [
       "Independent · 4 Trackers | 3 Streams · MJPEG · Full",
@@ -550,9 +869,33 @@
       "Independent · 4 Trackers | 3 Streams · MJPEG · Full"
     ];
 
+    const labels = {
+      en: {
+        settings: "Settings",
+        general: "General",
+        about: "About Us",
+        performancePanel: "Performance Panel",
+        buttonMappingHints: "Button Mapping Hints",
+        ipd: "Interpupillary Distance",
+        polling: "Polling frequency",
+        language: "Language"
+      },
+      zh: {
+        settings: "设置",
+        general: "通用",
+        about: "关于我们",
+        performancePanel: "性能面板",
+        buttonMappingHints: "按键映射提示",
+        ipd: "瞳距",
+        polling: "轮询频率",
+        language: "语言"
+      }
+    };
+
     let profiles = [];
     let appliedId = null;
     let lastSavedName = "";
+    let activeLang = "en";
 
     function normalizeName(name) {
       return name.trim().replace(/\s+/g, " ");
@@ -585,7 +928,7 @@
     function updateSaveButton() {
       const name = normalizeName(currentName.value);
       if (name && lastSavedName && name.toLowerCase() === lastSavedName.toLowerCase()) {
-        saveBtn.textContent = "Saved";
+        saveBtn.textContent = "Existed";
         saveBtn.className = "btn saved";
         saveBtn.disabled = true;
       } else {
@@ -656,6 +999,113 @@
       });
     }
 
+    function setActiveView(view) {
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.classList.toggle("active", item.dataset.view === view);
+      });
+      document.querySelectorAll(".view").forEach((item) => {
+        item.classList.toggle("active", item.id === view + "View");
+      });
+      if (view === "tracking" || view === "video") {
+        showToast("error", "This module is coming next.");
+        setActiveView("general");
+      }
+    }
+
+    function togglePerformance(show) {
+      performanceWindow.classList.toggle("hidden", !show);
+      performanceSwitch.classList.toggle("on", show);
+    }
+
+    function setLanguage(lang) {
+      activeLang = lang;
+      languageLabel.textContent = lang === "en" ? "English" : "简体中文";
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        node.textContent = labels[lang][node.dataset.i18n];
+      });
+      document.querySelectorAll(".language-option").forEach((option) => {
+        const selected = option.dataset.lang === lang;
+        option.classList.toggle("active", selected);
+        option.querySelector("span:last-child").textContent = selected ? "✓" : "";
+      });
+      languageMenu.classList.add("hidden");
+    }
+
+    function makeDraggable(windowEl) {
+      const handle = document.querySelector(`[data-drag-handle="${windowEl.id}"]`);
+      let dragging = false;
+      let startX = 0;
+      let startY = 0;
+      let originX = 0;
+      let originY = 0;
+
+      const move = (event) => {
+        if (!dragging) return;
+        const x = originX + event.clientX - startX;
+        const y = originY + event.clientY - startY;
+        windowEl.style.left = `${x}px`;
+        windowEl.style.top = `${y}px`;
+        windowEl.style.transform = "none";
+      };
+
+      const stop = () => {
+        dragging = false;
+        document.removeEventListener("pointermove", move);
+        document.removeEventListener("pointerup", stop);
+      };
+
+      handle.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        const rect = windowEl.getBoundingClientRect();
+        dragging = true;
+        startX = event.clientX;
+        startY = event.clientY;
+        originX = rect.left;
+        originY = rect.top;
+        document.addEventListener("pointermove", move);
+        document.addEventListener("pointerup", stop);
+      });
+    }
+
+    document.querySelectorAll(".nav-item").forEach((item) => {
+      item.addEventListener("click", () => setActiveView(item.dataset.view));
+    });
+
+    document.querySelectorAll(".switch").forEach((toggle) => {
+      toggle.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (toggle === performanceSwitch) {
+          togglePerformance(!toggle.classList.contains("on"));
+          return;
+        }
+        toggle.classList.toggle("on");
+      });
+    });
+
+    document.getElementById("performanceRow").addEventListener("click", () => {
+      togglePerformance(true);
+    });
+
+    languageButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      languageMenu.classList.toggle("hidden");
+    });
+
+    document.querySelectorAll(".language-option").forEach((option) => {
+      option.addEventListener("click", () => setLanguage(option.dataset.lang));
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".language-control")) {
+        languageMenu.classList.add("hidden");
+      }
+    });
+
+    currentName.addEventListener("input", updateSaveButton);
+    currentName.addEventListener("focus", () => {
+      if (currentName.value === "Unsaved Profile") currentName.select();
+    });
+
     saveBtn.addEventListener("click", () => {
       const name = normalizeName(currentName.value);
 
@@ -685,11 +1135,6 @@
       showToast("success", "Profile Saved");
     });
 
-    currentName.addEventListener("input", updateSaveButton);
-    currentName.addEventListener("focus", () => {
-      if (currentName.value === "Unsaved Profile") currentName.select();
-    });
-
     quickStartBtn.addEventListener("click", () => {
       if (!appliedId) {
         showToast("error", "Apply a profile first.");
@@ -698,41 +1143,10 @@
       showToast("success", "Quick Start Success");
     });
 
+    makeDraggable(document.getElementById("settingsWindow"));
+    makeDraggable(performanceWindow);
     renderProfiles();
     updateSaveButton();
-  </script>
-  <script>
-    (() => {
-      const style = document.createElement('style');
-      style.textContent = `
-        button,
-        .save-as-profile,
-        .save-profile-btn,
-        .current-config button {
-          white-space: nowrap !important;
-        }
-        .save-as-profile,
-        .save-profile-btn {
-          min-width: 220px !important;
-        }
-      `;
-      document.head.appendChild(style);
-
-      const refreshQuickStartLabels = () => {
-        document.querySelectorAll('button').forEach((button) => {
-          const label = button.textContent.trim().replace(/\s+/g, ' ');
-          if (label === 'Saved') button.textContent = 'Existed';
-          if (label === 'Save As Profile') button.classList.add('save-as-profile');
-        });
-      };
-
-      refreshQuickStartLabels();
-      new MutationObserver(refreshQuickStartLabels).observe(document.body, {
-        childList: true,
-        subtree: true,
-        characterData: true
-      });
-    })();
   </script>
 </body>
 </html>
