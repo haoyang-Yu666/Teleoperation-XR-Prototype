@@ -288,6 +288,131 @@
       display: none;
     }
 
+    .welcome-window {
+      width: min(1360px, calc(100vw - 80px));
+      min-height: 780px;
+      padding: 48px 86px 46px;
+      border-radius: 46px;
+      background:
+        radial-gradient(circle at 54% 30%, rgba(92, 78, 64, 0.28), transparent 34%),
+        linear-gradient(135deg, rgba(56, 47, 38, 0.96), rgba(22, 21, 18, 0.96));
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
+    }
+
+    .welcome-logo {
+      width: 112px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.82);
+    }
+
+    .welcome-logo img {
+      width: 82px;
+      height: 82px;
+      object-fit: contain;
+    }
+
+    .welcome-title {
+      margin: 34px 0 68px;
+      text-align: center;
+      font-size: 52px;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-shadow: 0 8px 6px rgba(0, 0, 0, 0.35);
+    }
+
+    .welcome-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: start;
+      gap: 44px;
+      margin-bottom: 92px;
+    }
+
+    .welcome-step {
+      display: grid;
+      justify-items: center;
+      gap: 26px;
+      position: relative;
+      min-width: 0;
+    }
+
+    .welcome-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 34px;
+      left: calc(50% + 72px);
+      width: min(188px, 52%);
+      border-top: 3px dotted rgba(255, 255, 255, 0.78);
+    }
+
+    .welcome-step-number {
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: white;
+      background: rgba(150, 145, 130, 0.72);
+      font-size: 38px;
+    }
+
+    .welcome-step-icon {
+      height: 104px;
+      display: grid;
+      place-items: center;
+    }
+
+    .welcome-step-icon img {
+      max-width: 88px;
+      max-height: 104px;
+      object-fit: contain;
+    }
+
+    .welcome-step-label {
+      font-size: 27px;
+      white-space: nowrap;
+    }
+
+    .welcome-actions {
+      display: grid;
+      justify-items: center;
+      gap: 38px;
+    }
+
+    .welcome-start {
+      min-width: 292px;
+      height: 76px;
+      border-radius: 16px;
+      font-size: 28px;
+    }
+
+    .welcome-check {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: rgba(255, 255, 255, 0.94);
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .welcome-check input {
+      appearance: none;
+      width: 36px;
+      height: 36px;
+      border: 5px solid rgba(255, 255, 255, 0.78);
+      border-radius: 5px;
+      background: transparent;
+    }
+
+    .welcome-check input:checked {
+      background:
+        linear-gradient(135deg, transparent 0 43%, white 44% 56%, transparent 57%),
+        linear-gradient(45deg, transparent 0 47%, white 48% 60%, transparent 61%);
+    }
+
     .shell {
       width: min(1280px, calc(100vw - 56px));
       height: min(860px, calc(100vh - 56px));
@@ -1297,7 +1422,7 @@
       </div>
 
       <nav class="setting-bar" aria-label="Application setting bar">
-        <button class="bar-button active" id="barSettings" type="button" aria-label="Settings">
+        <button class="bar-button" id="barSettings" type="button" aria-label="Settings">
           <img class="bar-icon settings-icon" src="/assets/setting-bar/settings.png" alt="" />
         </button>
         <button class="bar-button" id="barQuickStart" type="button" aria-label="Quick Start">
@@ -1318,7 +1443,51 @@
       </nav>
     </section>
 
-    <section class="vr-window" id="settingsWindow" aria-label="Settings draggable window">
+    <section class="vr-window welcome-window" id="welcomeWindow" aria-label="Welcome draggable window">
+      <div class="welcome-logo" aria-hidden="true">
+        <img src="/assets/setting-bar/app-logo.png" alt="" />
+      </div>
+
+      <h1 class="welcome-title">Welcome to SSI Teleoperation XR</h1>
+
+      <div class="welcome-steps" aria-label="Welcome steps">
+        <div class="welcome-step">
+          <span class="welcome-step-number">1</span>
+          <span class="welcome-step-icon"><img src="/assets/setting-bar/welcome-step-devices.png" alt="" /></span>
+          <span class="welcome-step-label">Set Devices</span>
+        </div>
+        <div class="welcome-step">
+          <span class="welcome-step-number">2</span>
+          <span class="welcome-step-icon"><img src="/assets/setting-bar/welcome-step-tracking.png" alt="" /></span>
+          <span class="welcome-step-label">Start Tracking</span>
+        </div>
+        <div class="welcome-step">
+          <span class="welcome-step-number">3</span>
+          <span class="welcome-step-icon"><img src="/assets/setting-bar/welcome-step-video.png" alt="" /></span>
+          <span class="welcome-step-label">Connect Video</span>
+        </div>
+        <div class="welcome-step">
+          <span class="welcome-step-number">4</span>
+          <span class="welcome-step-icon"><img src="/assets/setting-bar/welcome-step-teleop.png" alt="" /></span>
+          <span class="welcome-step-label">Begin Teleop</span>
+        </div>
+      </div>
+
+      <div class="welcome-actions">
+        <button class="btn primary welcome-start" id="welcomeStartBtn" type="button">Get Started</button>
+        <label class="welcome-check">
+          <input id="dontShowWelcome" type="checkbox" />
+          <span>Don’t Show Again</span>
+        </label>
+      </div>
+
+      <div class="drag-zone" data-drag-handle="welcomeWindow" aria-label="Drag welcome window">
+        <button class="drag-close" data-close-window="welcomeWindow" type="button" aria-label="Close welcome window"></button>
+        <span class="drag-line" data-drag-line="welcomeWindow"></span>
+      </div>
+    </section>
+
+    <section class="vr-window closed" id="settingsWindow" aria-label="Settings draggable window">
       <div class="shell">
         <aside class="sidebar">
           <div class="brand">
@@ -1553,6 +1722,8 @@
     const languageButton = document.getElementById("languageButton");
     const languageMenu = document.getElementById("languageMenu");
     const languageLabel = document.getElementById("languageLabel");
+    const welcomeWindow = document.getElementById("welcomeWindow");
+    const welcomeStartBtn = document.getElementById("welcomeStartBtn");
     const settingsWindow = document.getElementById("settingsWindow");
     const aboutNav = document.getElementById("aboutNav");
     const vstSwitch = document.getElementById("vstSwitch");
@@ -1743,6 +1914,13 @@
       }
     }
 
+    function dismissWelcome(openSettingsAfter = false) {
+      welcomeWindow.classList.add("closed");
+      if (openSettingsAfter) {
+        openSettings("general");
+      }
+    }
+
     function setVstState(on) {
       vstSwitch.classList.toggle("on", on);
       barVstIcon.src = on ? "/assets/setting-bar/vst-on.png" : "/assets/setting-bar/vst-off.png";
@@ -1835,6 +2013,8 @@
       button.addEventListener("click", () => closeWindow(button.dataset.closeWindow));
     });
 
+    welcomeStartBtn.addEventListener("click", () => dismissWelcome(true));
+
     document.querySelectorAll(".switch").forEach((toggle) => {
       toggle.addEventListener("click", (event) => {
         event.stopPropagation();
@@ -1922,6 +2102,7 @@
     });
 
     makeDraggable(settingsWindow);
+    makeDraggable(welcomeWindow);
     setVstState(true);
     renderProfiles();
     updateSaveButton();
