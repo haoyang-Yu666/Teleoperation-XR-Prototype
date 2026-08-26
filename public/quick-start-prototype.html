@@ -294,7 +294,7 @@
       min-height: 760px;
       display: grid;
       grid-template-columns: 390px 1fr;
-      overflow: hidden;
+      overflow: visible;
       border-radius: 46px;
       background: linear-gradient(90deg, rgba(20, 17, 14, 0.94), var(--panel));
       box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
@@ -303,6 +303,7 @@
     .sidebar {
       position: relative;
       padding: 52px 48px 42px;
+      border-radius: 46px 0 0 46px;
       background: linear-gradient(180deg, rgba(28, 24, 20, 0.98), rgba(19, 18, 15, 0.96));
       border-right: 1px solid rgba(255, 255, 255, 0.045);
     }
@@ -368,14 +369,16 @@
       flex: 0 0 auto;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.78);
-      color: rgba(36, 35, 34, 0.82);
-      font-size: 19px;
-      font-weight: 700;
     }
 
     .nav-item.active .nav-icon {
-      color: white;
       background: var(--blue);
+    }
+
+    .nav-icon img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
     }
 
     .about {
@@ -420,6 +423,7 @@
       position: relative;
       min-width: 0;
       padding: 56px 72px 118px;
+      border-radius: 0 46px 46px 0;
       background:
         radial-gradient(circle at 60% 20%, rgba(105, 93, 80, 0.2), transparent 36%),
         linear-gradient(90deg, rgba(71, 58, 48, 0.42), rgba(33, 29, 24, 0.48));
@@ -1096,10 +1100,10 @@
           </div>
 
           <nav class="nav" aria-label="Settings sections">
-            <button class="nav-item" data-view="general" type="button"><span class="nav-icon">⚙</span><span data-i18n="general">General</span></button>
-            <button class="nav-item" data-view="tracking" type="button"><span class="nav-icon">◔</span><span>Tracking</span></button>
-            <button class="nav-item" data-view="video" type="button"><span class="nav-icon">▣</span><span>Video</span></button>
-            <button class="nav-item active" data-view="quickStart" type="button"><span class="nav-icon">▷</span><span>Quick Start</span></button>
+            <button class="nav-item" data-view="general" type="button"><span class="nav-icon"><img src="/assets/setting-bar/side-general.png" alt="" /></span><span data-i18n="general">General</span></button>
+            <button class="nav-item" data-view="tracking" type="button"><span class="nav-icon"><img src="/assets/setting-bar/side-tracking.png" alt="" /></span><span>Tracking</span></button>
+            <button class="nav-item" data-view="video" type="button"><span class="nav-icon"><img src="/assets/setting-bar/side-video.png" alt="" /></span><span>Video</span></button>
+            <button class="nav-item active" data-view="quickStart" type="button"><span class="nav-icon"><img src="/assets/setting-bar/side-quick-start.png" alt="" /></span><span>Quick Start</span></button>
           </nav>
 
           <button class="about" id="aboutNav" data-view="about" type="button">
