@@ -84,11 +84,84 @@
     }
 
     .status-strip {
-      width: 442px;
-      height: auto;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 35px;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+    }
+
+    .status-time,
+    .status-percent {
+      color: white;
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .status-wifi {
+      position: relative;
+      width: 38px;
+      height: 31px;
+      margin-right: 109px;
+    }
+
+    .status-wifi::before,
+    .status-wifi::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      border: 4px solid white;
+      border-bottom: 0;
+      border-left-color: transparent;
+      border-right-color: transparent;
+      transform: translateX(-50%);
+    }
+
+    .status-wifi::before {
+      top: 2px;
+      width: 35px;
+      height: 17px;
+      border-radius: 35px 35px 0 0;
+    }
+
+    .status-wifi::after {
+      top: 12px;
+      width: 21px;
+      height: 11px;
+      border-radius: 22px 22px 0 0;
+    }
+
+    .status-wifi-dot {
+      position: absolute;
+      left: 50%;
+      bottom: 1px;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: white;
+      transform: translateX(-50%);
+    }
+
+    .status-controller {
+      width: 22px;
+      height: 35px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 11px rgba(0, 0, 0, 0.4));
+    }
+
+    .status-battery {
+      width: 45px;
+      height: 26px;
+      object-fit: contain;
+    }
+
+    .status-headset {
+      width: 58px;
+      height: 30px;
+      object-fit: contain;
+      margin-left: 12px;
     }
 
     .setting-bar {
@@ -177,6 +250,11 @@
     .exit-icon {
       width: 46px;
       height: 46px;
+    }
+
+    .scene-icon {
+      width: 48px;
+      height: 48px;
     }
 
     .icon-scene::before {
@@ -859,7 +937,16 @@
 <body>
   <main class="stage">
     <section class="vr-hud" aria-label="Application status and setting bar">
-      <img class="status-strip" src="/assets/setting-bar/status-strip.png" alt="11:00 Wi-Fi 54% controller and headset status" />
+      <div class="status-strip" aria-label="Status bar">
+        <span class="status-time">11:00</span>
+        <span class="status-wifi" aria-hidden="true"><span class="status-wifi-dot"></span></span>
+        <img class="status-controller" src="/assets/setting-bar/controller-left.png" alt="" />
+        <img class="status-battery" src="/assets/setting-bar/battery-yellow.png" alt="" />
+        <img class="status-controller" src="/assets/setting-bar/controller-right.png" alt="" />
+        <img class="status-battery" src="/assets/setting-bar/battery-white.png" alt="" />
+        <img class="status-headset" src="/assets/setting-bar/headset.png" alt="" />
+        <span class="status-percent">54%</span>
+      </div>
 
       <nav class="setting-bar" aria-label="Application setting bar">
         <button class="bar-button active" id="barSettings" type="button" aria-label="Settings">
@@ -875,7 +962,7 @@
           <img class="bar-icon guide-icon" src="/assets/setting-bar/guide.png" alt="" />
         </button>
         <button class="bar-button" id="barScene" type="button" aria-label="Scene">
-          <span class="bar-icon icon-scene" aria-hidden="true"></span>
+          <img class="bar-icon scene-icon" src="/assets/setting-bar/scene.png" alt="" />
         </button>
         <button class="bar-button" id="barExit" type="button" aria-label="Exit">
           <img class="bar-icon exit-icon" src="/assets/setting-bar/exit-vector.png" alt="" />
