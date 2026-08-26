@@ -71,12 +71,199 @@
       min-height: 100vh;
     }
 
+    .setting-bar {
+      position: absolute;
+      top: 84px;
+      left: 50%;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      min-height: 126px;
+      padding: 16px 54px;
+      border-radius: 72px;
+      background: rgba(40, 34, 28, 0.94);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+      transform: translateX(-50%);
+    }
+
+    .bar-button {
+      position: relative;
+      width: 92px;
+      min-height: 92px;
+      display: grid;
+      place-items: center;
+      gap: 7px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .bar-button::before {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0);
+      transform: scale(0.74);
+      transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .bar-button:hover::before,
+    .bar-button.active::before {
+      background: rgba(255, 255, 255, 0.08);
+      transform: scale(1);
+    }
+
+    .bar-icon {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      color: white;
+    }
+
+    .bar-label {
+      position: relative;
+      color: white;
+      font-size: 18px;
+      line-height: 1;
+      opacity: 0;
+    }
+
+    .bar-button.active .bar-label {
+      opacity: 1;
+    }
+
+    .icon-gear::before {
+      content: "⚙";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 54px;
+      line-height: 1;
+    }
+
+    .icon-play::before {
+      content: "▷";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      border: 5px solid white;
+      border-radius: 999px;
+      font-size: 42px;
+      line-height: 1;
+      text-indent: 4px;
+    }
+
+    .icon-eye::before,
+    .icon-eye-off::before {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 13px;
+      width: 46px;
+      height: 26px;
+      border: 5px solid white;
+      border-radius: 50% / 60%;
+      transform: rotate(0deg);
+    }
+
+    .icon-eye::after,
+    .icon-eye-off::after {
+      content: "";
+      position: absolute;
+      left: 21px;
+      top: 22px;
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      background: white;
+    }
+
+    .icon-eye-off .slash {
+      position: absolute;
+      left: 3px;
+      top: 24px;
+      width: 49px;
+      height: 5px;
+      border-radius: 999px;
+      background: white;
+      transform: rotate(36deg);
+      transform-origin: center;
+    }
+
+    .icon-guide::before {
+      content: "?";
+      position: absolute;
+      right: -2px;
+      bottom: 0;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      color: rgba(40, 34, 28, 0.94);
+      background: white;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .icon-guide::after {
+      content: "⌁";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 58px;
+      transform: rotate(-20deg);
+    }
+
+    .icon-scene::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 11px;
+      width: 36px;
+      height: 30px;
+      border: 5px solid white;
+      border-radius: 8px;
+    }
+
+    .icon-scene::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 17px;
+      width: 14px;
+      height: 20px;
+      border: 5px solid white;
+      border-left: 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .icon-exit::before {
+      content: "↪";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 58px;
+      line-height: 1;
+    }
+
     .vr-window {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
       touch-action: none;
+    }
+
+    .vr-window.closed {
+      display: none;
     }
 
     .shell {
@@ -589,7 +776,7 @@
     .drag-zone {
       position: absolute;
       left: 50%;
-      bottom: -26px;
+      top: calc(100% + 24px);
       width: 370px;
       height: 86px;
       display: flex;
@@ -597,20 +784,21 @@
       gap: 36px;
       padding: 0 28px;
       transform: translateX(-50%);
-      cursor: grab;
       touch-action: none;
     }
 
-    .drag-zone:active {
-      cursor: grabbing;
-    }
-
-    .drag-dot {
+    .drag-close {
       width: 29px;
       height: 29px;
       flex: 0 0 auto;
+      border: 0;
       border-radius: 999px;
       background: var(--handle);
+      cursor: pointer;
+    }
+
+    .drag-close:hover {
+      background: rgba(255, 255, 255, 0.92);
     }
 
     .drag-line {
@@ -618,6 +806,11 @@
       flex: 1;
       border-radius: 999px;
       background: var(--handle);
+      cursor: grab;
+    }
+
+    .drag-line:active {
+      cursor: grabbing;
     }
 
     .floating {
@@ -717,6 +910,33 @@
 </head>
 <body>
   <main class="stage">
+    <nav class="setting-bar" aria-label="Application setting bar">
+      <button class="bar-button active" id="barSettings" type="button" aria-label="Settings">
+        <span class="bar-icon icon-gear" aria-hidden="true"></span>
+        <span class="bar-label">Settings</span>
+      </button>
+      <button class="bar-button" id="barQuickStart" type="button" aria-label="Quick Start">
+        <span class="bar-icon icon-play" aria-hidden="true"></span>
+        <span class="bar-label">Quick Start</span>
+      </button>
+      <button class="bar-button" id="barVst" type="button" aria-label="VST">
+        <span class="bar-icon icon-eye" id="barVstIcon" aria-hidden="true"><span class="slash"></span></span>
+        <span class="bar-label">VST</span>
+      </button>
+      <button class="bar-button" id="barGuide" type="button" aria-label="Guide">
+        <span class="bar-icon icon-guide" aria-hidden="true"></span>
+        <span class="bar-label">Guide</span>
+      </button>
+      <button class="bar-button" id="barScene" type="button" aria-label="Scene">
+        <span class="bar-icon icon-scene" aria-hidden="true"></span>
+        <span class="bar-label">Scene</span>
+      </button>
+      <button class="bar-button" id="barExit" type="button" aria-label="Exit">
+        <span class="bar-icon icon-exit" aria-hidden="true"></span>
+        <span class="bar-label">Exit</span>
+      </button>
+    </nav>
+
     <section class="vr-window" id="settingsWindow" aria-label="Settings draggable window">
       <div class="shell">
         <aside class="sidebar">
@@ -766,7 +986,7 @@
 
                 <div class="setting-row">
                   <span>VST</span>
-                  <button class="switch on" aria-label="Toggle VST" type="button"></button>
+                  <button class="switch on" id="vstSwitch" aria-label="Toggle VST" type="button"></button>
                 </div>
 
                 <button class="setting-row" type="button">
@@ -825,8 +1045,8 @@
       </div>
 
       <div class="drag-zone" data-drag-handle="settingsWindow" aria-label="Drag settings window">
-        <span class="drag-dot"></span>
-        <span class="drag-line"></span>
+        <button class="drag-close" data-close-window="settingsWindow" type="button" aria-label="Close settings window"></button>
+        <span class="drag-line" data-drag-line="settingsWindow"></span>
       </div>
     </section>
 
@@ -844,8 +1064,8 @@
         <div class="metric-row"><span></span><span>Latency</span><span class="metric-value">23ms</span></div>
       </div>
       <div class="drag-zone" data-drag-handle="performanceWindow" aria-label="Drag performance panel">
-        <span class="drag-dot"></span>
-        <span class="drag-line"></span>
+        <button class="drag-close" data-close-window="performanceWindow" type="button" aria-label="Close performance panel"></button>
+        <span class="drag-line" data-drag-line="performanceWindow"></span>
       </div>
     </section>
   </main>
@@ -860,8 +1080,14 @@
     const languageButton = document.getElementById("languageButton");
     const languageMenu = document.getElementById("languageMenu");
     const languageLabel = document.getElementById("languageLabel");
+    const settingsWindow = document.getElementById("settingsWindow");
     const performanceWindow = document.getElementById("performanceWindow");
     const performanceSwitch = document.getElementById("performanceSwitch");
+    const vstSwitch = document.getElementById("vstSwitch");
+    const barSettings = document.getElementById("barSettings");
+    const barQuickStart = document.getElementById("barQuickStart");
+    const barVst = document.getElementById("barVst");
+    const barVstIcon = document.getElementById("barVstIcon");
 
     const details = [
       "Independent · 4 Trackers | 3 Streams · MJPEG · Full",
@@ -1006,15 +1232,41 @@
       document.querySelectorAll(".view").forEach((item) => {
         item.classList.toggle("active", item.id === view + "View");
       });
+      barSettings.classList.toggle("active", view !== "quickStart");
+      barQuickStart.classList.toggle("active", view === "quickStart");
       if (view === "tracking" || view === "video") {
         showToast("error", "This module is coming next.");
         setActiveView("general");
       }
     }
 
+    function openSettings(view = "general") {
+      settingsWindow.classList.remove("closed");
+      setActiveView(view);
+    }
+
+    function closeWindow(id) {
+      const target = document.getElementById(id);
+      target.classList.add(id === "performanceWindow" ? "hidden" : "closed");
+      if (id === "performanceWindow") {
+        performanceSwitch.classList.remove("on");
+      }
+      if (id === "settingsWindow") {
+        barSettings.classList.remove("active");
+        barQuickStart.classList.remove("active");
+      }
+    }
+
     function togglePerformance(show) {
       performanceWindow.classList.toggle("hidden", !show);
       performanceSwitch.classList.toggle("on", show);
+    }
+
+    function setVstState(on) {
+      vstSwitch.classList.toggle("on", on);
+      barVst.classList.toggle("active", on);
+      barVstIcon.classList.toggle("icon-eye", on);
+      barVstIcon.classList.toggle("icon-eye-off", !on);
     }
 
     function setLanguage(lang) {
@@ -1032,7 +1284,7 @@
     }
 
     function makeDraggable(windowEl) {
-      const handle = document.querySelector(`[data-drag-handle="${windowEl.id}"]`);
+      const handle = document.querySelector(`[data-drag-line="${windowEl.id}"]`);
       let dragging = false;
       let startX = 0;
       let startY = 0;
@@ -1071,11 +1323,26 @@
       item.addEventListener("click", () => setActiveView(item.dataset.view));
     });
 
+    barSettings.addEventListener("click", () => openSettings("general"));
+    barQuickStart.addEventListener("click", () => openSettings("quickStart"));
+    barVst.addEventListener("click", () => setVstState(!vstSwitch.classList.contains("on")));
+    document.getElementById("barGuide").addEventListener("click", () => showToast("success", "Guide opened"));
+    document.getElementById("barScene").addEventListener("click", () => showToast("success", "Scene opened"));
+    document.getElementById("barExit").addEventListener("click", () => showToast("success", "Exit selected"));
+
+    document.querySelectorAll("[data-close-window]").forEach((button) => {
+      button.addEventListener("click", () => closeWindow(button.dataset.closeWindow));
+    });
+
     document.querySelectorAll(".switch").forEach((toggle) => {
       toggle.addEventListener("click", (event) => {
         event.stopPropagation();
         if (toggle === performanceSwitch) {
           togglePerformance(!toggle.classList.contains("on"));
+          return;
+        }
+        if (toggle === vstSwitch) {
+          setVstState(!toggle.classList.contains("on"));
           return;
         }
         toggle.classList.toggle("on");
@@ -1143,8 +1410,9 @@
       showToast("success", "Quick Start Success");
     });
 
-    makeDraggable(document.getElementById("settingsWindow"));
+    makeDraggable(settingsWindow);
     makeDraggable(performanceWindow);
+    setVstState(true);
     renderProfiles();
     updateSaveButton();
   </script>
