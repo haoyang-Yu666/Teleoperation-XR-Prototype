@@ -1916,12 +1916,14 @@
       right: -8px;
       bottom: -8px;
       z-index: 3;
-      width: 48px;
-      height: 48px;
+      width: 56px;
+      height: 56px;
       border-right: 7px solid white;
       border-bottom: 7px solid white;
       border-radius: 0 0 24px 0;
-      pointer-events: none;
+      cursor: nwse-resize;
+      pointer-events: auto;
+      touch-action: none;
     }
 
     .stream-drag-zone {
@@ -2658,7 +2660,7 @@
       const sideWidth = Math.min(470, Math.max(340, viewport * 0.24));
       const sideHeight = Math.round(sideWidth * 0.64);
       const gap = Math.min(34, Math.max(18, viewport * 0.018));
-      const centerTop = Math.max(190, Math.round(window.innerHeight * 0.13));
+      const centerTop = Math.max(236, Math.round(window.innerHeight * 0.13) + 46);
       const sideTop = centerTop + Math.round(centerHeight * 0.26);
       let centerLeft = Math.round((viewport - centerWidth) / 2);
       let leftLeft = Math.round(centerLeft - sideWidth - gap);
@@ -2994,6 +2996,55 @@
       });
     }
 
+    function makeResizable(streamEl) {
+      const handle = streamEl.querySelector(".stream-corner");
+      let resizing = false;
+      let startX = 0;
+      let startY = 0;
+      let startWidth = 0;
+      let startHeight = 0;
+      let aspect = 1;
+
+      const move = (event) => {
+        if (!resizing) return;
+        const rect = streamEl.getBoundingClientRect();
+        const main = streamEl.classList.contains("scene-stream-main");
+        const minWidth = main ? 500 : 320;
+        const designMaxWidth = main ? 900 : 650;
+        const maxWidth = Math.max(minWidth, Math.min(designMaxWidth, window.innerWidth - rect.left - 20));
+        const maxHeightWidth = Math.max(minWidth, (window.innerHeight - rect.top - 70) * aspect);
+        const limit = Math.min(maxWidth, maxHeightWidth);
+        const deltaWidth = event.clientX - startX;
+        const deltaHeightAsWidth = (event.clientY - startY) * aspect;
+        const nextWidth = Math.min(limit, Math.max(minWidth, startWidth + Math.max(deltaWidth, deltaHeightAsWidth)));
+        streamEl.style.width = `${Math.round(nextWidth)}px`;
+        streamEl.style.height = `${Math.round(nextWidth / aspect)}px`;
+      };
+
+      const stop = () => {
+        resizing = false;
+        document.removeEventListener("pointermove", move);
+        document.removeEventListener("pointerup", stop);
+      };
+
+      handle.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const rect = streamEl.getBoundingClientRect();
+        resizing = true;
+        startX = event.clientX;
+        startY = event.clientY;
+        startWidth = rect.width;
+        startHeight = rect.height;
+        aspect = startWidth / startHeight;
+        streamEl.style.left = `${rect.left}px`;
+        streamEl.style.top = `${rect.top}px`;
+        streamEl.style.transform = "none";
+        document.addEventListener("pointermove", move);
+        document.addEventListener("pointerup", stop);
+      });
+    }
+
     document.querySelectorAll(".nav-item").forEach((item) => {
       item.addEventListener("click", () => setActiveView(item.dataset.view));
     });
@@ -3161,6 +3212,7 @@
     makeDraggable(welcomeWindow);
     makeDraggable(guideWindow);
     sceneStreams.forEach(makeDraggable);
+    sceneStreams.forEach(makeResizable);
     applySceneLayout(getDefaultSceneLayout());
     setSceneRenderMode("Full");
     setVstState(true);
