@@ -2617,12 +2617,7 @@
     const renderButton = document.getElementById("renderButton");
     const renderLabel = document.getElementById("renderLabel");
     const renderMenu = document.getElementById("renderMenu");
-
-    const details = [
-      "Independent · 4 Trackers | 3 Streams · MJPEG · Full",
-      "Full Body · 4 Trackers | 3 Streams · MJPEG · Full",
-      "Independent · 4 Trackers | 3 Streams · MJPEG · Full"
-    ];
+    const currentMeta = document.getElementById("currentMeta");
 
     const labels = {
       en: {
@@ -2652,6 +2647,11 @@
     let lastSavedName = "";
     let activeLang = "en";
     let savedSceneLayout = null;
+    const configuration = {
+      motionMode: null,
+      trackerNumber: "2",
+      renderMode: "Full"
+    };
 
     function getDefaultSceneLayout() {
       const viewport = Math.max(window.innerWidth, 980);
@@ -2845,6 +2845,22 @@
       barGuideIcon.src = open ? "/assets/setting-bar/guide-active.png" : "/assets/setting-bar/guide-closed.png";
     }
 
+    function getCurrentConfigurationMeta() {
+      if (!configuration.motionMode) {
+        return "Not configured yet";
+      }
+
+      const motionLabel = configuration.motionMode === "full" ? "Full Body" : "Independent";
+      const trackerCount = configuration.motionMode === "full" ? "2" : configuration.trackerNumber;
+      const enabledStreams = Array.from(document.querySelectorAll(".stream-check")).filter((checkbox) => checkbox.checked).length;
+      const streamText = enabledStreams === 1 ? "1 Stream" : `${enabledStreams} Streams`;
+      return `${motionLabel} · ${trackerCount} Trackers | ${streamText} · MJPEG · ${configuration.renderMode}`;
+    }
+
+    function updateCurrentConfigurationMeta() {
+      currentMeta.textContent = getCurrentConfigurationMeta();
+    }
+
     function applySceneLayout(layout) {
       Object.entries(layout).forEach(([id, values]) => {
         const stream = document.getElementById(id);
@@ -2930,6 +2946,7 @@
     }
 
     function setMotionMode(mode) {
+      configuration.motionMode = mode;
       document.querySelectorAll(".motion-mode").forEach((button) => {
         button.classList.toggle("active", button.dataset.mode === mode);
       });
@@ -2938,9 +2955,11 @@
       trackerFixedValue.classList.toggle("hidden", !fullBody);
       trackerSelect.classList.toggle("hidden", fullBody);
       trackerMenu.classList.add("hidden");
+      updateCurrentConfigurationMeta();
     }
 
     function setTrackerNumber(value) {
+      configuration.trackerNumber = value;
       trackerSelectLabel.textContent = value;
       document.querySelectorAll(".tracker-option").forEach((option) => {
         const selected = option.dataset.value === value;
@@ -2948,9 +2967,11 @@
         option.querySelector("span:last-child").textContent = selected ? "✓" : "";
       });
       trackerMenu.classList.add("hidden");
+      updateCurrentConfigurationMeta();
     }
 
     function setRenderMode(value) {
+      configuration.renderMode = value;
       renderLabel.textContent = value;
       document.querySelectorAll(".render-option").forEach((option) => {
         const selected = option.dataset.render === value;
@@ -2958,6 +2979,7 @@
         option.querySelector("span:last-child").textContent = selected ? "✓" : "";
       });
       renderMenu.classList.add("hidden");
+      updateCurrentConfigurationMeta();
     }
 
     function makeDraggable(windowEl) {
@@ -3096,6 +3118,10 @@
       option.addEventListener("click", () => setRenderMode(option.dataset.render));
     });
 
+    document.querySelectorAll(".stream-check").forEach((checkbox) => {
+      checkbox.addEventListener("change", updateCurrentConfigurationMeta);
+    });
+
     sceneResetButton.addEventListener("click", resetSceneLayout);
     sceneSaveButton.addEventListener("click", saveSceneLayout);
     sceneViewButton.addEventListener("click", (event) => {
@@ -3189,7 +3215,7 @@
       const nextProfile = {
         id: Date.now().toString(36) + Math.random().toString(36).slice(2),
         name,
-        meta: details[profiles.length % details.length]
+        meta: getCurrentConfigurationMeta()
       };
 
       profiles.unshift(nextProfile);
@@ -3217,6 +3243,7 @@
     setSceneRenderMode("Full");
     setVstState(true);
     setGuideState(false);
+    updateCurrentConfigurationMeta();
     renderProfiles();
     updateSaveButton();
 
