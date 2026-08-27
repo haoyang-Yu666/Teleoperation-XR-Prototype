@@ -922,6 +922,11 @@
       box-shadow: 0 0 0 3px rgba(111, 169, 223, 0.35);
     }
 
+    .tracking-input::placeholder {
+      color: rgba(255, 255, 255, 0.62);
+      opacity: 1;
+    }
+
     .motion-title {
       margin: 0 0 26px 6px;
       font-size: 24px;
@@ -2373,6 +2378,10 @@
                       <span class="tracking-value">192.10.10.11</span>
                     </div>
                     <label class="tracking-row">
+                      <span>Target Robot Name</span>
+                      <input class="tracking-input" id="targetRobotName" maxlength="30" placeholder="Unnamed" aria-label="Target Robot Name" />
+                    </label>
+                    <label class="tracking-row">
                       <span>Target Robot IP</span>
                       <input class="tracking-input" value="192.192.192.192" aria-label="Target Robot IP" />
                     </label>
@@ -2509,7 +2518,7 @@
                   <input class="profile-input" id="currentName" value="Unsaved Profile" aria-label="Current profile name" />
                   <button class="btn primary" id="saveBtn" type="button">Save As Profile</button>
                 </div>
-                <div class="meta" id="currentMeta">Independent · 4 Trackers&nbsp;&nbsp;|&nbsp;&nbsp;3 Streams · MJPEG · Full</div>
+                <div class="meta" id="currentMeta">Not configured yet</div>
               </section>
 
               <div class="saved-header">
@@ -2618,6 +2627,7 @@
     const renderLabel = document.getElementById("renderLabel");
     const renderMenu = document.getElementById("renderMenu");
     const currentMeta = document.getElementById("currentMeta");
+    const targetRobotName = document.getElementById("targetRobotName");
 
     const labels = {
       en: {
@@ -2649,8 +2659,7 @@
     let savedSceneLayout = null;
     const configuration = {
       motionMode: null,
-      trackerNumber: "2",
-      renderMode: "Full"
+      robotName: ""
     };
 
     function getDefaultSceneLayout() {
@@ -2851,10 +2860,10 @@
       }
 
       const motionLabel = configuration.motionMode === "full" ? "Full Body" : "Independent";
-      const trackerCount = configuration.motionMode === "full" ? "2" : configuration.trackerNumber;
+      const robotName = configuration.robotName.trim() || "Unnamed Robot";
       const enabledStreams = Array.from(document.querySelectorAll(".stream-check")).filter((checkbox) => checkbox.checked).length;
       const streamText = enabledStreams === 1 ? "1 Stream" : `${enabledStreams} Streams`;
-      return `${motionLabel} · ${trackerCount} Trackers | ${streamText} · MJPEG · ${configuration.renderMode}`;
+      return `${robotName} | ${motionLabel} | ${streamText} · WebRTC`;
     }
 
     function updateCurrentConfigurationMeta() {
@@ -2959,7 +2968,6 @@
     }
 
     function setTrackerNumber(value) {
-      configuration.trackerNumber = value;
       trackerSelectLabel.textContent = value;
       document.querySelectorAll(".tracker-option").forEach((option) => {
         const selected = option.dataset.value === value;
@@ -2967,11 +2975,9 @@
         option.querySelector("span:last-child").textContent = selected ? "✓" : "";
       });
       trackerMenu.classList.add("hidden");
-      updateCurrentConfigurationMeta();
     }
 
     function setRenderMode(value) {
-      configuration.renderMode = value;
       renderLabel.textContent = value;
       document.querySelectorAll(".render-option").forEach((option) => {
         const selected = option.dataset.render === value;
@@ -2979,7 +2985,6 @@
         option.querySelector("span:last-child").textContent = selected ? "✓" : "";
       });
       renderMenu.classList.add("hidden");
-      updateCurrentConfigurationMeta();
     }
 
     function makeDraggable(windowEl) {
@@ -3120,6 +3125,14 @@
 
     document.querySelectorAll(".stream-check").forEach((checkbox) => {
       checkbox.addEventListener("change", updateCurrentConfigurationMeta);
+    });
+
+    targetRobotName.addEventListener("input", () => {
+      if (targetRobotName.value.length > 30) {
+        targetRobotName.value = targetRobotName.value.slice(0, 30);
+      }
+      configuration.robotName = targetRobotName.value;
+      updateCurrentConfigurationMeta();
     });
 
     sceneResetButton.addEventListener("click", resetSceneLayout);
