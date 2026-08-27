@@ -414,9 +414,9 @@
     }
 
     .guide-window {
-      width: min(1180px, calc(100vw - 96px));
+      width: min(1260px, calc(100vw - 96px));
       min-height: 760px;
-      padding: 66px 76px 74px;
+      padding: 58px 72px 72px;
       border-radius: 36px;
       background:
         radial-gradient(circle at 54% 30%, rgba(92, 78, 64, 0.26), transparent 34%),
@@ -425,40 +425,40 @@
     }
 
     .guide-title {
-      margin: 0 0 78px;
+      margin: 0 0 62px;
       text-align: center;
-      font-size: 34px;
+      font-size: 40px;
       font-weight: 400;
     }
 
     .guide-diagram {
       position: relative;
-      width: 920px;
-      height: 365px;
-      margin: 0 auto 72px;
+      width: 1080px;
+      height: 400px;
+      margin: 0 auto 74px;
     }
 
     .guide-controller {
       position: absolute;
-      top: 60px;
-      width: 190px;
-      height: 270px;
+      top: 88px;
+      width: 205px;
+      height: 285px;
       object-fit: contain;
       filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.26));
     }
 
     .guide-controller.left {
-      left: 294px;
+      left: 355px;
     }
 
     .guide-controller.right {
-      right: 254px;
+      right: 315px;
     }
 
     .guide-callout {
       position: absolute;
       color: white;
-      font-size: 21px;
+      font-size: 23px;
       line-height: 1.35;
       white-space: nowrap;
     }
@@ -466,7 +466,7 @@
     .guide-callout strong {
       display: block;
       margin-bottom: 4px;
-      font-size: 22px;
+      font-size: 25px;
       font-weight: 500;
     }
 
@@ -501,7 +501,7 @@
       gap: 22px;
       justify-items: center;
       color: white;
-      font-size: 22px;
+      font-size: 24px;
       line-height: 1.4;
     }
 
@@ -1039,6 +1039,164 @@
       height: 58px;
       border-radius: 18px;
       font-size: 26px;
+    }
+
+    .video-content {
+      width: min(660px, 100%);
+      margin: 0 auto;
+    }
+
+    .video-list {
+      display: grid;
+      gap: 34px;
+    }
+
+    .video-row,
+    .stream-row {
+      min-height: 56px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 16px;
+      padding: 0 24px;
+      border-radius: 14px;
+      color: rgba(255, 255, 255, 0.96);
+      background: var(--row);
+      font-size: 22px;
+    }
+
+    .video-input {
+      width: 112px;
+      height: 38px;
+      border: 0;
+      outline: 0;
+      border-radius: 18px;
+      color: white;
+      background: var(--button-gray);
+      text-align: center;
+      font-size: 22px;
+    }
+
+    .video-input:focus {
+      box-shadow: 0 0 0 3px rgba(111, 169, 223, 0.35);
+    }
+
+    .stream-title {
+      margin: 0 0 22px 24px;
+      font-size: 24px;
+      font-weight: 400;
+    }
+
+    .stream-list {
+      display: grid;
+      gap: 32px;
+    }
+
+    .stream-row {
+      grid-template-columns: 28px minmax(0, 1fr) auto;
+      min-height: 58px;
+      padding-left: 24px;
+    }
+
+    .stream-check {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border: 3px solid rgba(255, 255, 255, 0.92);
+      border-radius: 4px;
+      background: transparent;
+    }
+
+    .stream-check:checked {
+      border-color: var(--blue);
+      background: var(--blue);
+    }
+
+    .stream-check:checked::after {
+      content: "✓";
+      color: white;
+      font-size: 18px;
+      line-height: 1;
+      transform: translateY(-1px);
+    }
+
+    .stream-name {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .render-control {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .render-button {
+      width: 114px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 0;
+      border-radius: 19px;
+      padding: 0 16px 0 26px;
+      color: white;
+      background: var(--button-gray);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .render-menu {
+      position: absolute;
+      right: 0;
+      top: 50px;
+      z-index: 40;
+      width: 128px;
+      overflow: hidden;
+      border-radius: 14px;
+      background: rgba(68, 63, 56, 0.98);
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.26);
+    }
+
+    .render-menu.hidden {
+      display: none;
+    }
+
+    .render-option {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 0;
+      padding: 0 14px;
+      color: white;
+      background: transparent;
+      font-size: 18px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .render-option.active {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .video-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 66px;
+    }
+
+    .video-action {
+      width: 146px;
+      height: 52px;
+      border-radius: 16px;
+      font-size: 20px;
     }
 
     .about-content {
@@ -1586,56 +1744,56 @@
         <img class="guide-controller left" src="/assets/setting-bar/guide-left-controller.png" alt="" />
         <img class="guide-controller right" src="/assets/setting-bar/guide-right-controller.png" alt="" />
 
-        <div class="guide-callout" style="left: 0; top: 12px; text-align: right;">
+        <div class="guide-callout" style="left: 0; top: 28px; width: 260px; text-align: right;">
           <strong>Left joystick</strong>
           <span>Move Forward / Back<br />Turn Left / Right</span>
         </div>
-        <span class="guide-line" style="left: 132px; top: 28px; width: 210px; transform: rotate(0deg);"></span>
-        <span class="guide-line" style="left: 342px; top: 28px; width: 70px; transform: rotate(64deg);"></span>
+        <span class="guide-line" style="left: 270px; top: 44px; width: 168px;"></span>
+        <span class="guide-line" style="left: 438px; top: 44px; width: 74px; transform: rotate(64deg);"></span>
 
-        <div class="guide-callout" style="left: 38px; top: 108px; text-align: right;">
+        <div class="guide-callout" style="left: 42px; top: 128px; width: 218px; text-align: right;">
           <strong>Button Y</strong>
           <span>Start / Stop Recording</span>
         </div>
-        <span class="guide-line" style="left: 146px; top: 122px; width: 144px;"></span>
+        <span class="guide-line" style="left: 270px; top: 144px; width: 154px;"></span>
 
-        <div class="guide-callout" style="left: 56px; top: 202px; text-align: right;">
+        <div class="guide-callout" style="left: 54px; top: 236px; width: 206px; text-align: right;">
           <strong>Button X</strong>
           <span>Save Recording</span>
         </div>
-        <span class="guide-line" style="left: 134px; top: 214px; width: 118px;"></span>
-        <span class="guide-line" style="left: 252px; top: 214px; width: 45px; transform: rotate(-36deg);"></span>
+        <span class="guide-line" style="left: 270px; top: 252px; width: 126px;"></span>
+        <span class="guide-line" style="left: 396px; top: 252px; width: 58px; transform: rotate(-44deg);"></span>
 
-        <div class="guide-callout center" style="left: 406px; top: 84px;">
+        <div class="guide-callout center" style="left: 506px; top: 112px;">
           <strong>Trigger</strong>
         </div>
-        <span class="guide-line" style="left: 356px; top: 104px; width: 206px;"></span>
+        <span class="guide-line" style="left: 510px; top: 138px; width: 252px;"></span>
 
-        <div class="guide-callout center" style="left: 428px; top: 284px;">
+        <div class="guide-callout center" style="left: 530px; top: 320px;">
           <strong>Grip</strong>
         </div>
-        <span class="guide-line" style="left: 348px; top: 286px; width: 136px; transform: rotate(27deg);"></span>
-        <span class="guide-line" style="left: 484px; top: 286px; width: 148px; transform: rotate(-24deg);"></span>
+        <span class="guide-line" style="left: 508px; top: 318px; width: 142px; transform: rotate(28deg);"></span>
+        <span class="guide-line" style="left: 630px; top: 318px; width: 150px; transform: rotate(-26deg);"></span>
 
-        <div class="guide-callout" style="right: 0; top: 16px;">
+        <div class="guide-callout" style="right: 0; top: 28px; width: 260px;">
           <strong>Right joystick</strong>
           <span>Lift / Lower Robot</span>
         </div>
-        <span class="guide-line" style="left: 646px; top: 32px; width: 134px; transform: rotate(0deg);"></span>
-        <span class="guide-line" style="left: 604px; top: 86px; width: 62px; transform: rotate(-54deg);"></span>
+        <span class="guide-line" style="left: 734px; top: 44px; width: 150px;"></span>
+        <span class="guide-line" style="left: 700px; top: 102px; width: 70px; transform: rotate(-58deg);"></span>
 
-        <div class="guide-callout" style="right: 0; top: 112px;">
+        <div class="guide-callout" style="right: 0; top: 128px; width: 260px;">
           <strong>Button B</strong>
           <span>Reset Arm Position</span>
         </div>
-        <span class="guide-line" style="left: 616px; top: 124px; width: 198px;"></span>
+        <span class="guide-line" style="left: 716px; top: 144px; width: 168px;"></span>
 
-        <div class="guide-callout" style="right: 0; top: 204px;">
+        <div class="guide-callout" style="right: 0; top: 236px; width: 260px;">
           <strong>Button A</strong>
-          <span>label recording<br />Tap once : qualified<br />twice : unqualified</span>
+          <span>Label Recording<br />Tap Once : Qualified<br />Twice : Unqualified</span>
         </div>
-        <span class="guide-line" style="left: 618px; top: 222px; width: 78px; transform: rotate(42deg);"></span>
-        <span class="guide-line" style="left: 696px; top: 282px; width: 100px;"></span>
+        <span class="guide-line" style="left: 720px; top: 252px; width: 82px; transform: rotate(43deg);"></span>
+        <span class="guide-line" style="left: 800px; top: 312px; width: 84px;"></span>
       </div>
 
       <div class="guide-footnotes">
@@ -1797,6 +1955,69 @@
             <button class="btn primary tracking-apply" id="trackingApplyBtn" type="button">Apply</button>
           </section>
 
+          <section class="view" id="videoView">
+            <h1 class="page-title">Video</h1>
+
+            <div class="video-content">
+              <div class="video-list">
+                <div class="video-row">
+                  <span>Available Streams</span>
+                  <span>3</span>
+                </div>
+
+                <label class="video-row">
+                  <span>Local Listen Port</span>
+                  <input class="video-input" value="8888" aria-label="Local Listen Port" />
+                </label>
+
+                <div class="video-row">
+                  <span>Protocol</span>
+                  <span>MJPEG</span>
+                </div>
+
+                <section aria-label="Stream list">
+                  <h2 class="stream-title">Stream list</h2>
+                  <div class="stream-list">
+                    <div class="stream-row">
+                      <input class="stream-check" type="checkbox" checked aria-label="Enable stream 1" />
+                      <span class="stream-name"><span>Stream 1</span><span>Head View</span></span>
+                      <div class="render-control">
+                        <span>Render</span>
+                        <button class="render-button" id="renderButton" type="button">
+                          <span id="renderLabel">Full</span>
+                          <span>⌄</span>
+                        </button>
+                        <div class="render-menu hidden" id="renderMenu">
+                          <button class="render-option active" data-render="Full" type="button"><span>Full</span><span>✓</span></button>
+                          <button class="render-option" data-render="Left" type="button"><span>Left</span><span></span></button>
+                          <button class="render-option" data-render="Right" type="button"><span>Right</span><span></span></button>
+                          <button class="render-option" data-render="Stitched" type="button"><span>Stitched</span><span></span></button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="stream-row">
+                      <input class="stream-check" type="checkbox" aria-label="Enable stream 2" />
+                      <span class="stream-name"><span>Stream 2</span><span>Right View</span></span>
+                      <span></span>
+                    </div>
+
+                    <div class="stream-row">
+                      <input class="stream-check" type="checkbox" aria-label="Enable stream 3" />
+                      <span class="stream-name"><span>Stream 3</span><span>Left View</span></span>
+                      <span></span>
+                    </div>
+                  </div>
+                </section>
+              </div>
+
+              <div class="video-actions">
+                <button class="btn primary video-action" type="button">Pull</button>
+                <button class="btn delete video-action" type="button">Stop</button>
+              </div>
+            </div>
+          </section>
+
           <section class="view active" id="quickStartView">
             <h1 class="page-title">Quick Start</h1>
 
@@ -1903,6 +2124,9 @@
     const trackerSelectLabel = document.getElementById("trackerSelectLabel");
     const trackerMenu = document.getElementById("trackerMenu");
     const trackingApplyBtn = document.getElementById("trackingApplyBtn");
+    const renderButton = document.getElementById("renderButton");
+    const renderLabel = document.getElementById("renderLabel");
+    const renderMenu = document.getElementById("renderMenu");
 
     const details = [
       "Independent · 4 Trackers | 3 Streams · MJPEG · Full",
@@ -2050,10 +2274,6 @@
       });
       barSettings.classList.toggle("active", view !== "quickStart");
       barQuickStart.classList.toggle("active", view === "quickStart");
-      if (view === "video") {
-        showToast("error", "This module is coming next.");
-        setActiveView("general");
-      }
     }
 
     function openSettings(view = "general") {
@@ -2135,6 +2355,16 @@
       trackerMenu.classList.add("hidden");
     }
 
+    function setRenderMode(value) {
+      renderLabel.textContent = value;
+      document.querySelectorAll(".render-option").forEach((option) => {
+        const selected = option.dataset.render === value;
+        option.classList.toggle("active", selected);
+        option.querySelector("span:last-child").textContent = selected ? "✓" : "";
+      });
+      renderMenu.classList.add("hidden");
+    }
+
     function makeDraggable(windowEl) {
       const handle = document.querySelector(`[data-drag-line="${windowEl.id}"]`);
       let dragging = false;
@@ -2213,6 +2443,15 @@
       option.addEventListener("click", () => setTrackerNumber(option.dataset.value));
     });
 
+    renderButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      renderMenu.classList.toggle("hidden");
+    });
+
+    document.querySelectorAll(".render-option").forEach((option) => {
+      option.addEventListener("click", () => setRenderMode(option.dataset.render));
+    });
+
     trackingApplyBtn.addEventListener("click", () => showToast("success", "Tracking Applied"));
 
     languageButton.addEventListener("click", (event) => {
@@ -2230,6 +2469,9 @@
       }
       if (!event.target.closest(".tracker-select")) {
         trackerMenu.classList.add("hidden");
+      }
+      if (!event.target.closest(".render-control")) {
+        renderMenu.classList.add("hidden");
       }
     });
 
