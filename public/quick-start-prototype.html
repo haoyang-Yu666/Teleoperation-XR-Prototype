@@ -1589,16 +1589,17 @@
 
     .scene-tools {
       position: absolute;
-      left: 50%;
-      top: 234px;
+      left: calc(50% + 190px);
+      top: 218px;
       z-index: 32;
-      width: 452px;
-      height: 132px;
+      width: 360px;
+      height: 106px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       align-items: center;
-      padding: 0 34px;
-      border-radius: 66px;
+      justify-items: center;
+      padding: 0 28px;
+      border-radius: 56px;
       background: rgba(35, 29, 24, 0.91);
       box-shadow: 0 20px 62px rgba(0, 0, 0, 0.28);
       transform: translateX(-50%);
@@ -1606,24 +1607,37 @@
     }
 
     .scene-tool {
-      height: 104px;
+      position: relative;
+      width: 72px;
+      height: 72px;
       display: grid;
       place-items: center;
-      gap: 8px;
       border: 0;
-      border-radius: 36px;
+      border-radius: 999px;
       color: white;
       background: transparent;
-      font-size: 20px;
-      line-height: 1;
       cursor: pointer;
       text-align: center;
+      transition: transform 160ms ease;
+    }
+
+    .scene-tool::before {
+      content: "";
+      position: absolute;
+      width: 82px;
+      height: 82px;
+      top: 50%;
+      left: 50%;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0);
+      transform: translate(-50%, -50%) scale(0.78);
       transition: background 160ms ease, transform 160ms ease;
     }
 
-    .scene-tool:hover,
-    .scene-tool.active {
+    .scene-tool:hover::before,
+    .scene-tool.active::before {
       background: rgba(255, 255, 255, 0.08);
+      transform: translate(-50%, -50%) scale(1);
     }
 
     .scene-tool:active {
@@ -1631,15 +1645,20 @@
     }
 
     .scene-tool img {
-      width: 40px;
-      height: 40px;
+      position: relative;
+      width: 42px;
+      height: 42px;
       object-fit: contain;
+    }
+
+    .scene-tool span {
+      display: none;
     }
 
     .scene-view-menu {
       position: absolute;
-      left: calc(50% + 250px);
-      top: 240px;
+      left: calc(50% + 390px);
+      top: 224px;
       z-index: 36;
       width: 234px;
       padding: 42px 0;
@@ -2591,11 +2610,39 @@
     let activeLang = "en";
     let savedSceneLayout = null;
 
-    const defaultSceneLayout = {
-      sceneStream1: { left: "calc(50vw - 340px)", top: "220px", width: "680px", height: "420px", visible: true },
-      sceneStream2: { left: "calc(100vw - 500px)", top: "330px", width: "470px", height: "300px", visible: true },
-      sceneStream3: { left: "28px", top: "330px", width: "470px", height: "300px", visible: true }
-    };
+    function getDefaultSceneLayout() {
+      const viewport = Math.max(window.innerWidth, 980);
+      const centerWidth = Math.min(680, Math.max(520, viewport * 0.35));
+      const centerHeight = Math.round(centerWidth * 0.62);
+      const sideWidth = Math.min(470, Math.max(340, viewport * 0.24));
+      const sideHeight = Math.round(sideWidth * 0.64);
+      const gap = Math.min(34, Math.max(18, viewport * 0.018));
+      const centerTop = Math.max(190, Math.round(window.innerHeight * 0.13));
+      const sideTop = centerTop + Math.round(centerHeight * 0.26);
+      let centerLeft = Math.round((viewport - centerWidth) / 2);
+      let leftLeft = Math.round(centerLeft - sideWidth - gap);
+      let rightLeft = Math.round(centerLeft + centerWidth + gap);
+
+      if (leftLeft < 20) {
+        const shift = 20 - leftLeft;
+        leftLeft += shift;
+        centerLeft += shift;
+        rightLeft += shift;
+      }
+
+      if (rightLeft + sideWidth > viewport - 20) {
+        const shift = rightLeft + sideWidth - viewport + 20;
+        leftLeft -= shift;
+        centerLeft -= shift;
+        rightLeft -= shift;
+      }
+
+      return {
+        sceneStream1: { left: `${centerLeft}px`, top: `${centerTop}px`, width: `${centerWidth}px`, height: `${centerHeight}px`, visible: true },
+        sceneStream2: { left: `${rightLeft}px`, top: `${sideTop}px`, width: `${sideWidth}px`, height: `${sideHeight}px`, visible: true },
+        sceneStream3: { left: `${leftLeft}px`, top: `${sideTop}px`, width: `${sideWidth}px`, height: `${sideHeight}px`, visible: true }
+      };
+    }
 
     function normalizeName(name) {
       return name.trim().replace(/\s+/g, " ");
@@ -2793,7 +2840,7 @@
       sceneLayer.classList.toggle("closed", !open);
       barScene.classList.toggle("active", open);
       if (open) {
-        applySceneLayout(savedSceneLayout || defaultSceneLayout);
+        applySceneLayout(savedSceneLayout || getDefaultSceneLayout());
       } else {
         sceneViewMenu.classList.add("hidden");
         sceneRenderMenu.classList.add("hidden");
@@ -2803,7 +2850,7 @@
 
     function resetSceneLayout() {
       savedSceneLayout = null;
-      applySceneLayout(defaultSceneLayout);
+      applySceneLayout(getDefaultSceneLayout());
       setSceneRenderMode("Full");
       sceneViewMenu.classList.add("hidden");
       sceneViewButton.classList.remove("active");
@@ -3072,12 +3119,18 @@
     makeDraggable(welcomeWindow);
     makeDraggable(guideWindow);
     sceneStreams.forEach(makeDraggable);
-    applySceneLayout(defaultSceneLayout);
+    applySceneLayout(getDefaultSceneLayout());
     setSceneRenderMode("Full");
     setVstState(true);
     setGuideState(false);
     renderProfiles();
     updateSaveButton();
+
+    window.addEventListener("resize", () => {
+      if (!savedSceneLayout && !sceneLayer.classList.contains("closed")) {
+        applySceneLayout(getDefaultSceneLayout());
+      }
+    });
   </script>
 </body>
 </html>
