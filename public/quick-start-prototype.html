@@ -2088,7 +2088,7 @@
           <img class="bar-icon vst-icon" id="barVstIcon" src="/assets/setting-bar/vst-on.png" alt="" />
         </button>
         <button class="bar-button" id="barGuide" type="button" aria-label="Guide">
-          <img class="bar-icon guide-icon" src="/assets/setting-bar/guide.png" alt="" />
+          <img class="bar-icon guide-icon" src="/assets/setting-bar/guide-closed.png" alt="" />
         </button>
         <button class="bar-button" id="barScene" type="button" aria-label="Scene">
           <img class="bar-icon scene-icon" src="/assets/setting-bar/scene.png" alt="" />
@@ -2842,7 +2842,7 @@
     function setGuideState(open) {
       guideWindow.classList.toggle("closed", !open);
       barGuide.classList.toggle("active", open);
-      barGuideIcon.src = open ? "/assets/setting-bar/guide-open.png" : "/assets/setting-bar/guide.png";
+      barGuideIcon.src = open ? "/assets/setting-bar/guide-active.png" : "/assets/setting-bar/guide-closed.png";
     }
 
     function applySceneLayout(layout) {
