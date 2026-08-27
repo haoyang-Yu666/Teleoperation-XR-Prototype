@@ -20,6 +20,9 @@
       --button-gray: rgba(125, 118, 108, 0.76);
       --row: rgba(20, 18, 15, 0.48);
       --handle: rgba(152, 150, 147, 0.88);
+      --dropdown-idle: rgba(73, 68, 62, 0.98);
+      --dropdown-hover: rgba(47, 42, 36, 0.98);
+      --dropdown-selected: rgba(151, 149, 144, 0.96);
     }
 
     * {
@@ -1870,6 +1873,44 @@
       background: rgba(255, 255, 255, 0.22);
     }
 
+    .language-menu,
+    .tracker-menu,
+    .render-menu,
+    .scene-render-menu,
+    .scene-view-menu {
+      background: var(--dropdown-idle);
+    }
+
+    .language-option,
+    .tracker-option,
+    .render-option,
+    .scene-render-option,
+    .scene-view-option {
+      background: var(--dropdown-idle);
+      transition: background 120ms ease;
+    }
+
+    .language-option:hover,
+    .tracker-option:hover,
+    .render-option:hover,
+    .scene-render-option:hover,
+    .scene-view-option:hover {
+      background: var(--dropdown-hover);
+    }
+
+    .language-option.active,
+    .tracker-option.active,
+    .render-option.active,
+    .scene-render-option.active,
+    .scene-view-option.active,
+    .language-option.active:hover,
+    .tracker-option.active:hover,
+    .render-option.active:hover,
+    .scene-render-option.active:hover,
+    .scene-view-option.active:hover {
+      background: var(--dropdown-selected);
+    }
+
     .stream-corner {
       position: absolute;
       right: -8px;
@@ -2833,6 +2874,7 @@
       const option = document.querySelector(`[data-scene-toggle="${id}"]`);
       if (!stream || !option) return;
       stream.classList.toggle("hidden", !visible);
+      option.classList.toggle("active", visible);
       option.querySelector(".scene-check").textContent = visible ? "✓" : "";
     }
 
