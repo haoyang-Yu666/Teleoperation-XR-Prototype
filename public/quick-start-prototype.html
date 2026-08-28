@@ -2452,7 +2452,7 @@
               <div class="video-list">
                 <div class="video-row">
                   <span>Available Streams</span>
-                  <span>3</span>
+                  <span id="availableStreamsValue">3</span>
                 </div>
 
                 <label class="video-row">
@@ -2462,7 +2462,7 @@
 
                 <div class="video-row">
                   <span>Protocol</span>
-                  <span>MJPEG</span>
+                  <span id="protocolValue">MJPEG</span>
                 </div>
 
                 <section aria-label="Stream list">
@@ -2628,6 +2628,8 @@
     const renderMenu = document.getElementById("renderMenu");
     const currentMeta = document.getElementById("currentMeta");
     const targetRobotName = document.getElementById("targetRobotName");
+    const availableStreamsValue = document.getElementById("availableStreamsValue");
+    const protocolValue = document.getElementById("protocolValue");
 
     const labels = {
       en: {
@@ -2861,9 +2863,10 @@
 
       const motionLabel = configuration.motionMode === "full" ? "Full Body" : "Independent";
       const robotName = configuration.robotName.trim() || "Unnamed Robot";
-      const enabledStreams = Array.from(document.querySelectorAll(".stream-check")).filter((checkbox) => checkbox.checked).length;
-      const streamText = enabledStreams === 1 ? "1 Stream" : `${enabledStreams} Streams`;
-      return `${robotName} | ${motionLabel} | ${streamText} · WebRTC`;
+      const streamCount = Number.parseInt(availableStreamsValue.textContent, 10) || 0;
+      const streamText = streamCount === 1 ? "1 Stream" : `${streamCount} Streams`;
+      const protocol = protocolValue.textContent.trim();
+      return `${robotName} | ${motionLabel} | ${streamText} · ${protocol}`;
     }
 
     function updateCurrentConfigurationMeta() {
@@ -3121,10 +3124,6 @@
 
     document.querySelectorAll(".render-option").forEach((option) => {
       option.addEventListener("click", () => setRenderMode(option.dataset.render));
-    });
-
-    document.querySelectorAll(".stream-check").forEach((checkbox) => {
-      checkbox.addEventListener("change", updateCurrentConfigurationMeta);
     });
 
     targetRobotName.addEventListener("input", () => {
