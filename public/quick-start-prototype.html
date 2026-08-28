@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Settings Prototype</title>
+  <title>SSI Teleoperation XR</title>
   <style>
     :root {
       --panel: rgba(38, 32, 25, 0.92);
@@ -2543,7 +2543,7 @@
                   <img src="/assets/setting-bar/app-logo.png" alt="" />
                 </div>
                 <div>
-                  <h2 class="about-name">Teleoperation XR</h2>
+                  <h2 class="about-name">SSI Teleoperation XR</h2>
                   <p class="about-copy">Professional XR Teleoperation</p>
                   <p class="about-copy">Version 1.0.0</p>
                 </div>
@@ -2631,27 +2631,119 @@
     const availableStreamsValue = document.getElementById("availableStreamsValue");
     const protocolValue = document.getElementById("protocolValue");
 
-    const labels = {
-      en: {
-        settings: "Settings",
-        general: "General",
-        about: "About Us",
-        updateFps: "Updata FPS",
-        buttonMappingHints: "Button Mapping Hints",
-        ipd: "Interpupillary Distance",
-        polling: "Polling frequency",
-        language: "Language"
-      },
-      zh: {
-        settings: "设置",
-        general: "通用",
-        about: "关于我们",
-        updateFps: "刷新帧率",
-        buttonMappingHints: "按键映射提示",
-        ipd: "瞳距",
-        polling: "轮询频率",
-        language: "语言"
-      }
+    const zhText = {
+      "Settings": "设置",
+      "General": "通用",
+      "Tracking": "追踪",
+      "Video": "视频",
+      "Quick Start": "快速开始",
+      "About Us": "关于我们",
+      "English": "英文",
+      "Welcome to SSI Teleoperation XR": "欢迎使用 SSI Teleoperation XR",
+      "Set Devices": "设置设备",
+      "Start Tracking": "开始追踪",
+      "Connect Video": "连接视频",
+      "Begin Teleop": "开始遥操作",
+      "Get Started": "开始使用",
+      "Don’t Show Again": "不再显示",
+      "Controller Guide": "控制器指南",
+      "Left joystick": "左摇杆",
+      "Move Forward / Back": "前进 / 后退",
+      "Turn Left / Right": "左转 / 右转",
+      "Button Y": "Y 键",
+      "Start / Stop Recording": "开始 / 停止录制",
+      "Button X": "X 键",
+      "Save Recording": "保存录制",
+      "Trigger": "扳机键",
+      "Grip": "握持键",
+      "Right joystick": "右摇杆",
+      "Lift / Lower Robot": "升起 / 降低机器人",
+      "Button B": "B 键",
+      "Reset Arm Position": "重置机械臂位置",
+      "Button A": "A 键",
+      "Label Recording": "标记录制",
+      "Tap Once : Qualified": "单击：合格",
+      "Twice : Unqualified": "双击：不合格",
+      "Grip: Press to start remote control. Release to end remote control.": "握持键：按下开始远程控制，松开结束远程控制。",
+      "Trigger: Press to close gripper. Release to release gripper.": "扳机键：按下闭合夹爪，松开释放夹爪。",
+      "Updata FPS": "刷新帧率",
+      "Button Mapping Hints": "按键映射提示",
+      "Interpupillary Distance": "瞳距",
+      "Polling frequency": "轮询频率",
+      "Language": "语言",
+      "Network": "网络",
+      "Host Local IP": "本机 IP",
+      "Target Robot Name": "目标机器人名称",
+      "Target Robot IP": "目标机器人 IP",
+      "Target Robot Port": "目标机器人端口",
+      "Basic  Tracking": "基础追踪",
+      "Head": "头部",
+      "Hand": "手部",
+      "Controller": "控制器",
+      "Motion Tracking Mode": "动作追踪模式",
+      "Motion Tracker Numbers": "动作追踪器数量",
+      "Full body": "全身",
+      "Full Body": "全身",
+      "Independent": "独立",
+      "Apply": "应用",
+      "Available Streams": "可用视频流",
+      "Local Listen Port": "本地监听端口",
+      "Protocol": "协议",
+      "Stream list": "视频流列表",
+      "Stream 1": "视频流 1",
+      "Stream 2": "视频流 2",
+      "Stream 3": "视频流 3",
+      "Stream1 Head View": "视频流1 头部视图",
+      "Head View": "头部视图",
+      "Right View": "右视图",
+      "Left View": "左视图",
+      "Stream 2 Right Hand": "视频流 2 右手",
+      "Stream 3 Left Hand": "视频流 3 左手",
+      "Latency": "延迟",
+      "Render": "渲染",
+      "Full": "完整",
+      "Left": "左",
+      "Right": "右",
+      "Stitched": "拼接",
+      "Pull": "拉取",
+      "Stop": "停止",
+      "Current Configuration": "当前配置",
+      "Save As Profile": "另存为配置",
+      "Saved Profiles": "已保存配置",
+      "Not configured yet": "尚未配置",
+      "No Profiles Yet": "暂无配置",
+      "Name the current configuration and save it as a profile.": "命名当前配置并保存为配置方案。",
+      "About": "关于",
+      "Professional XR Teleoperation": "专业 XR 遥操作",
+      "Version 1.0.0": "版本 1.0.0",
+      "Developer": "开发者",
+      "Legal": "法律",
+      "Privacy Policy": "隐私政策",
+      "reset": "重置",
+      "save layout": "保存布局",
+      "view": "视图",
+      "REC 00:01:42": "录制 00:01:42",
+      "Unnamed": "未命名",
+      "Unnamed Robot": "未命名机器人",
+      "Unsaved Profile": "未保存配置",
+      "Existed": "已存在",
+      "Applied": "已应用",
+      "Del": "删除",
+      "saved": "已保存",
+      "Profile Applied": "配置已应用",
+      "Profile Deleted": "配置已删除",
+      "Exit selected": "已选择退出",
+      "Tracking Applied": "追踪设置已应用",
+      "Please enter a profile name.": "请输入配置名称。",
+      "Duplicate name. Please rename.": "名称重复，请重命名。",
+      "Profile Saved": "配置已保存",
+      "Apply a profile first.": "请先应用一个配置。",
+      "Quick Start Success": "快速开始成功"
+    };
+
+    const defaultProfileNames = {
+      en: "Unsaved Profile",
+      zh: "未保存配置"
     };
 
     let profiles = [];
@@ -2663,6 +2755,49 @@
       motionMode: null,
       robotName: ""
     };
+    const translatableTextNodes = [];
+
+    function t(text) {
+      if (activeLang !== "zh") return text;
+      const normalized = text.replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim();
+      if (zhText[text]) return zhText[text];
+      if (zhText[normalized]) return zhText[normalized];
+      const latency = normalized.match(/^Latency\s+(.+)$/);
+      if (latency) return `延迟  ${latency[1]}`;
+      const savedCount = normalized.match(/^(\d+)\s+saved$/);
+      if (savedCount) return `${savedCount[1]} 个已保存`;
+      const defaultValue = normalized.match(/^(\d+)\s+\(default\)$/);
+      if (defaultValue) return `${defaultValue[1]}    （默认）`;
+      return text;
+    }
+
+    function isDefaultProfileName(value) {
+      return Object.values(defaultProfileNames).some((name) => value === name);
+    }
+
+    function collectTranslatableTextNodes() {
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+          if (node.parentElement.closest("script, style")) return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      });
+
+      let node = walker.nextNode();
+      while (node) {
+        translatableTextNodes.push({ node, source: node.textContent.trim() });
+        node = walker.nextNode();
+      }
+    }
+
+    function translateStaticText() {
+      translatableTextNodes.forEach(({ node, source }) => {
+        const leading = node.textContent.match(/^\s*/)[0];
+        const trailing = node.textContent.match(/\s*$/)[0];
+        node.textContent = leading + t(source) + trailing;
+      });
+    }
 
     function getDefaultSceneLayout() {
       const viewport = Math.max(window.innerWidth, 980);
@@ -2716,7 +2851,7 @@
       icon.textContent = type === "success" ? "✓" : "×";
 
       const text = document.createElement("span");
-      text.textContent = message;
+      text.textContent = t(message);
 
       toast.append(icon, text);
       toastLayer.appendChild(toast);
@@ -2729,11 +2864,11 @@
     function updateSaveButton() {
       const name = normalizeName(currentName.value);
       if (name && lastSavedName && name.toLowerCase() === lastSavedName.toLowerCase()) {
-        saveBtn.textContent = "Existed";
+        saveBtn.textContent = t("Existed");
         saveBtn.className = "btn saved";
         saveBtn.disabled = true;
       } else {
-        saveBtn.textContent = "Save As Profile";
+        saveBtn.textContent = t("Save As Profile");
         saveBtn.className = "btn primary";
         saveBtn.disabled = false;
       }
@@ -2741,12 +2876,12 @@
 
     function renderProfiles() {
       profilesEl.innerHTML = "";
-      profileCount.textContent = profiles.length + (profiles.length === 1 ? " saved" : " saved");
+      profileCount.textContent = activeLang === "zh" ? `${profiles.length} 个已保存` : profiles.length + (profiles.length === 1 ? " saved" : " saved");
 
       if (profiles.length === 0) {
         const empty = document.createElement("div");
         empty.className = "empty-state";
-        empty.innerHTML = "<div><strong>No Profiles Yet</strong><span>Name the current configuration and save it as a profile.</span></div>";
+        empty.innerHTML = `<div><strong>${t("No Profiles Yet")}</strong><span>${t("Name the current configuration and save it as a profile.")}</span></div>`;
         profilesEl.appendChild(empty);
         return;
       }
@@ -2765,7 +2900,7 @@
         const apply = document.createElement("button");
         apply.type = "button";
         apply.className = profile.id === appliedId ? "btn applied" : "btn primary";
-        apply.textContent = profile.id === appliedId ? "Applied" : "Apply";
+        apply.textContent = profile.id === appliedId ? t("Applied") : t("Apply");
         apply.disabled = profile.id === appliedId;
         apply.addEventListener("click", () => {
           appliedId = profile.id;
@@ -2779,7 +2914,7 @@
         const del = document.createElement("button");
         del.type = "button";
         del.className = "btn delete";
-        del.textContent = "Del";
+        del.textContent = t("Del");
         del.addEventListener("click", () => {
           profiles = profiles.filter((item) => item.id !== profile.id);
           if (appliedId === profile.id) appliedId = null;
@@ -2793,7 +2928,7 @@
 
         const meta = document.createElement("div");
         meta.className = "meta";
-        meta.textContent = profile.meta;
+        meta.textContent = profile.metaData ? formatConfigurationMeta(profile.metaData) : profile.meta;
 
         card.append(row, meta);
         profilesEl.appendChild(card);
@@ -2856,17 +2991,30 @@
       barGuideIcon.src = open ? "/assets/setting-bar/guide-active.png" : "/assets/setting-bar/guide-closed.png";
     }
 
-    function getCurrentConfigurationMeta() {
-      if (!configuration.motionMode) {
-        return "Not configured yet";
+    function getConfigurationSnapshot() {
+      return {
+        motionMode: configuration.motionMode,
+        robotName: configuration.robotName.trim(),
+        streamCount: Number.parseInt(availableStreamsValue.textContent, 10) || 0,
+        protocol: protocolValue.textContent.trim()
+      };
+    }
+
+    function formatConfigurationMeta(snapshot) {
+      if (!snapshot.motionMode) {
+        return t("Not configured yet");
       }
 
-      const motionLabel = configuration.motionMode === "full" ? "Full Body" : "Independent";
-      const robotName = configuration.robotName.trim() || "Unnamed Robot";
-      const streamCount = Number.parseInt(availableStreamsValue.textContent, 10) || 0;
-      const streamText = streamCount === 1 ? "1 Stream" : `${streamCount} Streams`;
-      const protocol = protocolValue.textContent.trim();
-      return `${robotName} | ${motionLabel} | ${streamText} · ${protocol}`;
+      const motionLabel = snapshot.motionMode === "full" ? "Full Body" : "Independent";
+      const robotName = snapshot.robotName || "Unnamed Robot";
+      const streamCount = snapshot.streamCount || 0;
+      const streamText = streamCount === 1 ? (activeLang === "zh" ? "1 路视频流" : "1 Stream") : (activeLang === "zh" ? `${streamCount} 路视频流` : `${streamCount} Streams`);
+      const protocol = snapshot.protocol || "";
+      return `${t(robotName)} | ${t(motionLabel)} | ${streamText} · ${protocol}`;
+    }
+
+    function getCurrentConfigurationMeta() {
+      return formatConfigurationMeta(getConfigurationSnapshot());
     }
 
     function updateCurrentConfigurationMeta() {
@@ -2944,17 +3092,28 @@
     }
 
     function setLanguage(lang) {
+      const switchingDefaultName = isDefaultProfileName(currentName.value);
       activeLang = lang;
+      translateStaticText();
       languageLabel.textContent = lang === "en" ? "English" : "简体中文";
-      document.querySelectorAll("[data-i18n]").forEach((node) => {
-        node.textContent = labels[lang][node.dataset.i18n];
-      });
+      document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+      document.title = "SSI Teleoperation XR";
+      if (switchingDefaultName) {
+        currentName.value = defaultProfileNames[lang];
+      }
+      targetRobotName.placeholder = t("Unnamed");
       document.querySelectorAll(".language-option").forEach((option) => {
         const selected = option.dataset.lang === lang;
         option.classList.toggle("active", selected);
         option.querySelector("span:last-child").textContent = selected ? "✓" : "";
       });
       languageMenu.classList.add("hidden");
+      setTrackerNumber(trackerSelectLabel.dataset.value || trackerSelectLabel.textContent);
+      setRenderMode(renderButton.dataset.value || renderLabel.dataset.value || "Full");
+      setSceneRenderMode(document.querySelector(".scene-render-option.active")?.dataset.sceneRender || "Full");
+      updateCurrentConfigurationMeta();
+      updateSaveButton();
+      renderProfiles();
     }
 
     function setMotionMode(mode) {
@@ -2971,6 +3130,7 @@
     }
 
     function setTrackerNumber(value) {
+      trackerSelectLabel.dataset.value = value;
       trackerSelectLabel.textContent = value;
       document.querySelectorAll(".tracker-option").forEach((option) => {
         const selected = option.dataset.value === value;
@@ -2981,7 +3141,9 @@
     }
 
     function setRenderMode(value) {
-      renderLabel.textContent = value;
+      renderButton.dataset.value = value;
+      renderLabel.dataset.value = value;
+      renderLabel.textContent = t(value);
       document.querySelectorAll(".render-option").forEach((option) => {
         const selected = option.dataset.render === value;
         option.classList.toggle("active", selected);
@@ -3206,13 +3368,13 @@
 
     currentName.addEventListener("input", updateSaveButton);
     currentName.addEventListener("focus", () => {
-      if (currentName.value === "Unsaved Profile") currentName.select();
+      if (isDefaultProfileName(currentName.value)) currentName.select();
     });
 
     saveBtn.addEventListener("click", () => {
       const name = normalizeName(currentName.value);
 
-      if (!name || name.toLowerCase() === "unsaved profile") {
+      if (!name || isDefaultProfileName(name)) {
         showToast("error", "Please enter a profile name.");
         currentName.focus();
         return;
@@ -3227,7 +3389,8 @@
       const nextProfile = {
         id: Date.now().toString(36) + Math.random().toString(36).slice(2),
         name,
-        meta: getCurrentConfigurationMeta()
+        meta: getCurrentConfigurationMeta(),
+        metaData: getConfigurationSnapshot()
       };
 
       profiles.unshift(nextProfile);
@@ -3251,7 +3414,10 @@
     makeDraggable(guideWindow);
     sceneStreams.forEach(makeDraggable);
     sceneStreams.forEach(makeResizable);
+    collectTranslatableTextNodes();
     applySceneLayout(getDefaultSceneLayout());
+    setTrackerNumber("2");
+    setRenderMode("Full");
     setSceneRenderMode("Full");
     setVstState(true);
     setGuideState(false);
