@@ -2847,6 +2847,10 @@
       return profiles.some((profile) => profile.name.toLowerCase() === normalized);
     }
 
+    function cloneSceneLayout(layout) {
+      return layout ? JSON.parse(JSON.stringify(layout)) : null;
+    }
+
     function showToast(type, message) {
       const toast = document.createElement("div");
       toast.className = "toast " + type;
@@ -3012,7 +3016,8 @@
         streamEnabled: streamChecks.map((checkbox) => checkbox.checked),
         protocol: protocolValue.textContent.trim(),
         localListenPort: localListenPort.value.trim(),
-        renderMode: renderButton.dataset.value || renderLabel.dataset.value || "Full"
+        renderMode: renderButton.dataset.value || renderLabel.dataset.value || "Full",
+        sceneLayout: cloneSceneLayout(savedSceneLayout)
       };
     }
 
@@ -3058,6 +3063,11 @@
 
       if (snapshot.renderMode) {
         setRenderMode(snapshot.renderMode);
+      }
+
+      savedSceneLayout = cloneSceneLayout(snapshot.sceneLayout);
+      if (!sceneLayer.classList.contains("closed")) {
+        applySceneLayout(savedSceneLayout || getDefaultSceneLayout());
       }
       updateCurrentConfigurationMeta();
     }
@@ -3140,6 +3150,13 @@
 
     function saveSceneLayout() {
       savedSceneLayout = getSceneLayout();
+      const appliedProfile = profiles.find((profile) => profile.id === appliedId);
+      if (appliedProfile) {
+        appliedProfile.metaData = {
+          ...(appliedProfile.metaData || getConfigurationSnapshot()),
+          sceneLayout: cloneSceneLayout(savedSceneLayout)
+        };
+      }
       sceneSaveButton.classList.add("active");
       setTimeout(() => sceneSaveButton.classList.remove("active"), 500);
     }
