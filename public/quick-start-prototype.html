@@ -2383,11 +2383,11 @@
                     </label>
                     <label class="tracking-row">
                       <span>Target Robot IP</span>
-                      <input class="tracking-input" value="192.192.192.192" aria-label="Target Robot IP" />
+                      <input class="tracking-input" id="targetRobotIp" value="192.192.192.192" aria-label="Target Robot IP" />
                     </label>
                     <label class="tracking-row">
                       <span>Target Robot Port</span>
-                      <input class="tracking-input" value="8888" aria-label="Target Robot Port" />
+                      <input class="tracking-input" id="targetRobotPort" value="8888" aria-label="Target Robot Port" />
                     </label>
                   </div>
                 </section>
@@ -2397,15 +2397,15 @@
                   <div class="tracking-card">
                     <div class="tracking-row">
                       <span>Head</span>
-                      <button class="switch on" aria-label="Toggle head tracking" type="button"></button>
+                      <button class="switch on" data-tracking-switch="head" aria-label="Toggle head tracking" type="button"></button>
                     </div>
                     <div class="tracking-row">
                       <span>Hand</span>
-                      <button class="switch on" aria-label="Toggle hand tracking" type="button"></button>
+                      <button class="switch on" data-tracking-switch="hand" aria-label="Toggle hand tracking" type="button"></button>
                     </div>
                     <div class="tracking-row">
                       <span>Controller</span>
-                      <button class="switch on" aria-label="Toggle controller tracking" type="button"></button>
+                      <button class="switch on" data-tracking-switch="controller" aria-label="Toggle controller tracking" type="button"></button>
                     </div>
                   </div>
                 </section>
@@ -2457,7 +2457,7 @@
 
                 <label class="video-row">
                   <span>Local Listen Port</span>
-                  <input class="video-input" value="8888" aria-label="Local Listen Port" />
+                  <input class="video-input" id="localListenPort" value="8888" aria-label="Local Listen Port" />
                 </label>
 
                 <div class="video-row">
@@ -2628,8 +2628,13 @@
     const renderMenu = document.getElementById("renderMenu");
     const currentMeta = document.getElementById("currentMeta");
     const targetRobotName = document.getElementById("targetRobotName");
+    const targetRobotIp = document.getElementById("targetRobotIp");
+    const targetRobotPort = document.getElementById("targetRobotPort");
+    const localListenPort = document.getElementById("localListenPort");
     const availableStreamsValue = document.getElementById("availableStreamsValue");
     const protocolValue = document.getElementById("protocolValue");
+    const streamChecks = Array.from(document.querySelectorAll(".stream-check"));
+    const trackingSwitches = Array.from(document.querySelectorAll("[data-tracking-switch]"));
 
     const zhText = {
       "Settings": "设置",
@@ -2904,6 +2909,7 @@
         apply.disabled = profile.id === appliedId;
         apply.addEventListener("click", () => {
           appliedId = profile.id;
+          applyConfigurationSnapshot(profile.metaData);
           currentName.value = profile.name;
           lastSavedName = profile.name;
           renderProfiles();
@@ -2995,9 +3001,65 @@
       return {
         motionMode: configuration.motionMode,
         robotName: configuration.robotName.trim(),
+        robotIp: targetRobotIp.value.trim(),
+        robotPort: targetRobotPort.value.trim(),
+        trackingSwitches: trackingSwitches.reduce((values, button) => {
+          values[button.dataset.trackingSwitch] = button.classList.contains("on");
+          return values;
+        }, {}),
+        trackerNumber: trackerSelectLabel.dataset.value || trackerSelectLabel.textContent.trim(),
         streamCount: Number.parseInt(availableStreamsValue.textContent, 10) || 0,
-        protocol: protocolValue.textContent.trim()
+        streamEnabled: streamChecks.map((checkbox) => checkbox.checked),
+        protocol: protocolValue.textContent.trim(),
+        localListenPort: localListenPort.value.trim(),
+        renderMode: renderButton.dataset.value || renderLabel.dataset.value || "Full"
       };
+    }
+
+    function clearMotionMode() {
+      configuration.motionMode = null;
+      document.querySelectorAll(".motion-mode").forEach((button) => {
+        button.classList.remove("active");
+      });
+      trackerNumbersRow.classList.add("hidden");
+      trackerFixedValue.classList.add("hidden");
+      trackerSelect.classList.add("hidden");
+      trackerMenu.classList.add("hidden");
+    }
+
+    function applyConfigurationSnapshot(snapshot) {
+      if (!snapshot) return;
+      const robotName = (snapshot.robotName || "").slice(0, 30);
+      targetRobotName.value = robotName;
+      targetRobotIp.value = snapshot.robotIp || targetRobotIp.value;
+      targetRobotPort.value = snapshot.robotPort || targetRobotPort.value;
+      localListenPort.value = snapshot.localListenPort || localListenPort.value;
+      configuration.robotName = robotName;
+
+      if (snapshot.motionMode) {
+        setMotionMode(snapshot.motionMode);
+        setTrackerNumber(snapshot.trackerNumber || "2");
+      } else {
+        clearMotionMode();
+      }
+
+      if (snapshot.trackingSwitches) {
+        trackingSwitches.forEach((button) => {
+          const value = snapshot.trackingSwitches[button.dataset.trackingSwitch];
+          if (typeof value === "boolean") button.classList.toggle("on", value);
+        });
+      }
+
+      if (Array.isArray(snapshot.streamEnabled)) {
+        streamChecks.forEach((checkbox, index) => {
+          checkbox.checked = Boolean(snapshot.streamEnabled[index]);
+        });
+      }
+
+      if (snapshot.renderMode) {
+        setRenderMode(snapshot.renderMode);
+      }
+      updateCurrentConfigurationMeta();
     }
 
     function formatConfigurationMeta(snapshot) {
