@@ -192,6 +192,7 @@
       border-radius: 999px;
       background: transparent;
       cursor: pointer;
+      transition: transform 160ms ease;
     }
 
     .bar-button::before {
@@ -204,13 +205,25 @@
       border-radius: 999px;
       background: rgba(255, 255, 255, 0);
       transform: translate(-50%, -50%) scale(0.78);
-      transition: background 160ms ease, transform 160ms ease;
+      transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    .bar-button:hover,
+    .bar-button.active {
+      transform: translateY(-5px);
     }
 
     .bar-button:hover::before,
     .bar-button.active::before {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 14px 28px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
       transform: translate(-50%, -50%) scale(1);
+    }
+
+    .bar-button:active {
+      transform: translateY(-2px) scale(0.97);
     }
 
     .bar-icon {
@@ -220,6 +233,13 @@
       color: white;
       object-fit: contain;
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      transition: filter 160ms ease, transform 160ms ease;
+    }
+
+    .bar-button:hover .bar-icon,
+    .bar-button.active .bar-icon {
+      filter: drop-shadow(0 7px 12px rgba(0, 0, 0, 0.38));
+      transform: scale(1.04);
     }
 
     .bar-label {
@@ -1639,17 +1659,25 @@
       border-radius: 999px;
       background: rgba(255, 255, 255, 0);
       transform: translate(-50%, -50%) scale(0.78);
-      transition: background 160ms ease, transform 160ms ease;
+      transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    .scene-tool:hover,
+    .scene-tool.active {
+      transform: translateY(-5px);
     }
 
     .scene-tool:hover::before,
     .scene-tool.active::before {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 14px 28px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
       transform: translate(-50%, -50%) scale(1);
     }
 
     .scene-tool:active {
-      transform: scale(0.97);
+      transform: translateY(-2px) scale(0.97);
     }
 
     .scene-tool img {
@@ -1657,6 +1685,14 @@
       width: 42px;
       height: 42px;
       object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      transition: filter 160ms ease, transform 160ms ease;
+    }
+
+    .scene-tool:hover img,
+    .scene-tool.active img {
+      filter: drop-shadow(0 7px 12px rgba(0, 0, 0, 0.38));
+      transform: scale(1.04);
     }
 
     .scene-tool span {
