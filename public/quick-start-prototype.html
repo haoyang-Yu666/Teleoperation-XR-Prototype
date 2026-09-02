@@ -609,10 +609,21 @@
       background: transparent;
       cursor: pointer;
       text-align: left;
+      transition: background 140ms ease, color 140ms ease, transform 140ms ease;
+    }
+
+    .nav-item:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.07);
+      transform: translateX(3px);
     }
 
     .nav-item.active {
       background: rgba(255, 255, 255, 0.14);
+    }
+
+    .nav-item.active:hover {
+      background: rgba(255, 255, 255, 0.18);
     }
 
     .nav-icon {
@@ -623,10 +634,21 @@
       flex: 0 0 auto;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.78);
+      transition: background 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+    }
+
+    .nav-item:hover .nav-icon {
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
+      transform: scale(1.04);
     }
 
     .nav-item.active .nav-icon {
       background: var(--blue);
+    }
+
+    .nav-item.active:hover .nav-icon {
+      background: var(--blue-strong);
     }
 
     .nav-icon img {
@@ -651,10 +673,22 @@
       font-size: 22px;
       background: transparent;
       cursor: pointer;
+      text-align: left;
+      transition: background 140ms ease, color 140ms ease, transform 140ms ease;
+    }
+
+    .about:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.07);
+      transform: translateX(3px);
     }
 
     .about.active {
       background: rgba(255, 255, 255, 0.14);
+    }
+
+    .about.active:hover {
+      background: rgba(255, 255, 255, 0.18);
     }
 
     .about-icon {
@@ -666,11 +700,22 @@
       background: rgba(255, 255, 255, 0.76);
       color: rgba(36, 35, 34, 0.86);
       font-weight: 800;
+      transition: background 140ms ease, box-shadow 140ms ease, color 140ms ease, transform 140ms ease;
+    }
+
+    .about:hover .about-icon {
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
+      transform: scale(1.04);
     }
 
     .about.active .about-icon {
       color: white;
       background: var(--blue);
+    }
+
+    .about.active:hover .about-icon {
+      background: var(--blue-strong);
     }
 
     .main {
