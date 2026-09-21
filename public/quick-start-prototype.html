@@ -436,6 +436,58 @@
         linear-gradient(45deg, transparent 0 47%, white 48% 60%, transparent 61%);
     }
 
+    .teleop-mode-window {
+      min-height: 720px;
+    }
+
+    .teleop-mode-title {
+      margin: 18px 0 62px;
+      text-align: center;
+      font-size: 50px;
+      font-weight: 400;
+      letter-spacing: 0;
+      text-shadow: 0 8px 6px rgba(0, 0, 0, 0.35);
+    }
+
+    .teleop-mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 116px;
+      width: min(1040px, 100%);
+      margin: 0 auto 78px;
+    }
+
+    .teleop-mode-card {
+      height: 318px;
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      gap: 28px;
+      border: 3px solid rgba(255, 255, 255, 0.32);
+      border-radius: 14px;
+      color: white;
+      background: rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .teleop-mode-card:hover,
+    .teleop-mode-card.active {
+      border-color: rgba(255, 255, 255, 0.62);
+      background: rgba(255, 255, 255, 0.13);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+    }
+
+    .teleop-mode-card img {
+      width: 194px;
+      height: 168px;
+      object-fit: contain;
+    }
+
+    .teleop-mode-card span {
+      font-size: 22px;
+    }
+
     .guide-window {
       width: min(1260px, calc(100vw - 96px));
       min-height: 760px;
@@ -841,13 +893,17 @@
       box-shadow: 0 0 0 3px rgba(111, 169, 223, 0.35);
     }
 
-    .language-control {
+    .language-control,
+    .teleop-control,
+    .remote-select {
       position: relative;
       display: grid;
       justify-items: end;
     }
 
-    .language-button {
+    .language-button,
+    .teleop-button,
+    .remote-select-button {
       min-width: 196px;
       height: 52px;
       display: flex;
@@ -863,7 +919,9 @@
       cursor: pointer;
     }
 
-    .language-menu {
+    .language-menu,
+    .teleop-menu,
+    .remote-select-menu {
       position: absolute;
       right: 0;
       top: 64px;
@@ -875,7 +933,29 @@
       box-shadow: 0 18px 46px rgba(0, 0, 0, 0.26);
     }
 
-    .language-option {
+    .teleop-button {
+      min-width: 312px;
+    }
+
+    .teleop-menu {
+      width: 312px;
+    }
+
+    .remote-select-button {
+      min-width: 272px;
+      justify-content: space-between;
+      font-size: 21px;
+    }
+
+    .remote-select-menu {
+      width: 272px;
+      top: 58px;
+      border-radius: 20px;
+    }
+
+    .language-option,
+    .teleop-option,
+    .remote-select-option {
       width: 100%;
       height: 60px;
       display: flex;
@@ -890,7 +970,9 @@
       text-align: left;
     }
 
-    .language-option.active {
+    .language-option.active,
+    .teleop-option.active,
+    .remote-select-option.active {
       background: rgba(255, 255, 255, 0.2);
     }
 
@@ -990,6 +1072,24 @@
     .tracking-input::placeholder {
       color: rgba(255, 255, 255, 0.62);
       opacity: 1;
+    }
+
+    .import-config-button {
+      min-width: 284px;
+      height: 50px;
+      border: 0;
+      border-radius: 18px;
+      color: rgba(255, 255, 255, 0.74);
+      background: var(--button-gray);
+      font-size: 20px;
+      cursor: pointer;
+      transition: background 140ms ease, color 140ms ease, box-shadow 140ms ease;
+    }
+
+    .import-config-button:hover {
+      color: white;
+      background: rgba(119, 113, 106, 0.98);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
     }
 
     .motion-title {
@@ -1960,6 +2060,8 @@
     }
 
     .language-menu,
+    .teleop-menu,
+    .remote-select-menu,
     .tracker-menu,
     .render-menu,
     .scene-render-menu,
@@ -1968,6 +2070,8 @@
     }
 
     .language-option,
+    .teleop-option,
+    .remote-select-option,
     .tracker-option,
     .render-option,
     .scene-render-option,
@@ -1977,6 +2081,8 @@
     }
 
     .language-option:hover,
+    .teleop-option:hover,
+    .remote-select-option:hover,
     .tracker-option:hover,
     .render-option:hover,
     .scene-render-option:hover,
@@ -1985,11 +2091,15 @@
     }
 
     .language-option.active,
+    .teleop-option.active,
+    .remote-select-option.active,
     .tracker-option.active,
     .render-option.active,
     .scene-render-option.active,
     .scene-view-option.active,
     .language-option.active:hover,
+    .teleop-option.active:hover,
+    .remote-select-option.active:hover,
     .tracker-option.active:hover,
     .render-option.active:hover,
     .scene-render-option.active:hover,
@@ -2291,7 +2401,7 @@
       </div>
 
       <div class="welcome-actions">
-        <button class="btn primary welcome-start" id="welcomeStartBtn" type="button">Get Started</button>
+        <button class="btn primary welcome-start" id="welcomeNextBtn" type="button">Next</button>
         <label class="welcome-check">
           <input id="dontShowWelcome" type="checkbox" />
           <span>Don’t Show Again</span>
@@ -2301,6 +2411,38 @@
       <div class="drag-zone" data-drag-handle="welcomeWindow" aria-label="Drag welcome window">
         <button class="drag-close" data-close-window="welcomeWindow" type="button" aria-label="Close welcome window"></button>
         <span class="drag-line" data-drag-line="welcomeWindow"></span>
+      </div>
+    </section>
+
+    <section class="vr-window welcome-window teleop-mode-window closed" id="teleopModeWindow" aria-label="Teleoperation mode draggable window">
+      <div class="welcome-logo" aria-hidden="true">
+        <img src="assets/setting-bar/app-logo.png" alt="" />
+      </div>
+
+      <h1 class="teleop-mode-title">Choosing Your Teleop Mode</h1>
+
+      <div class="teleop-mode-grid" aria-label="Teleoperation mode choices">
+        <button class="teleop-mode-card active" data-teleop-card="lan" type="button" aria-label="LAN Teleoperation">
+          <img src="assets/setting-bar/teleop-lan.png" alt="" />
+          <span>LAN Teleoperation</span>
+        </button>
+        <button class="teleop-mode-card" data-teleop-card="remote" type="button" aria-label="Remote Teleoperation">
+          <img src="assets/setting-bar/teleop-remote.png" alt="" />
+          <span>Remote Teleoperation</span>
+        </button>
+      </div>
+
+      <div class="welcome-actions">
+        <button class="btn primary welcome-start" id="teleopModeStartBtn" type="button">Get Started</button>
+        <label class="welcome-check">
+          <input id="dontShowTeleopMode" type="checkbox" />
+          <span>Don’t Show Again</span>
+        </label>
+      </div>
+
+      <div class="drag-zone" data-drag-handle="teleopModeWindow" aria-label="Drag teleoperation mode window">
+        <button class="drag-close" data-close-window="teleopModeWindow" type="button" aria-label="Close teleoperation mode window"></button>
+        <span class="drag-line" data-drag-line="teleopModeWindow"></span>
       </div>
     </section>
 
@@ -2405,6 +2547,20 @@
             <div class="content">
               <div class="settings-list">
                 <div class="setting-row">
+                  <span>Teleop Mode</span>
+                  <div class="teleop-control">
+                    <button class="teleop-button" id="teleopModeButton" type="button">
+                      <span id="teleopModeLabel">LAN Teleoperation</span>
+                      <span>⌄</span>
+                    </button>
+                    <div class="teleop-menu hidden" id="teleopModeMenu">
+                      <button class="teleop-option" data-teleop-mode="remote" type="button"><span>Remote Teleoperation</span><span></span></button>
+                      <button class="teleop-option active" data-teleop-mode="lan" type="button"><span>LAN Teleoperation</span><span>✓</span></button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="setting-row">
                   <span data-i18n="updateFps">Updata FPS</span>
                   <span class="fps-value">72HZ</span>
                 </div>
@@ -2451,7 +2607,7 @@
               <h1 class="page-title">Tracking</h1>
 
               <div class="tracking-content">
-                <section class="tracking-group" aria-label="Network settings">
+                <section class="tracking-group" id="trackingLanNetwork" aria-label="Network settings">
                   <h2 class="tracking-group-title">Network</h2>
                   <div class="tracking-card">
                     <div class="tracking-row">
@@ -2470,6 +2626,70 @@
                       <span>Target Robot Port</span>
                       <input class="tracking-input" id="targetRobotPort" value="8888" aria-label="Target Robot Port" />
                     </label>
+                  </div>
+                </section>
+
+                <section class="tracking-group hidden" id="trackingRemoteNetwork" aria-label="Remote network settings">
+                  <h2 class="tracking-group-title">Config File</h2>
+                  <div class="tracking-card">
+                    <div class="tracking-row">
+                      <span>Import Config File</span>
+                      <button class="import-config-button" id="importConfigBtn" type="button">Click To Import Config File</button>
+                    </div>
+                  </div>
+
+                  <h2 class="tracking-group-title" style="margin-top: 32px;">Remote Network</h2>
+                  <div class="tracking-card">
+                    <div class="tracking-row">
+                      <span>Project ID</span>
+                      <div class="remote-select" data-remote-select="projectId">
+                        <button class="remote-select-button" type="button"><span>ci4mrnzm8iitskq3</span><span>⌄</span></button>
+                        <div class="remote-select-menu hidden">
+                          <button class="remote-select-option active" data-value="ci4mrnzm8iitskq3" type="button"><span>ci4mrnzm8iitskq3</span><span>✓</span></button>
+                          <button class="remote-select-option" data-value="project_alpha" type="button"><span>project_alpha</span><span></span></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tracking-row">
+                      <span>Controller Device ID</span>
+                      <div class="remote-select" data-remote-select="controllerDeviceId">
+                        <button class="remote-select-button" type="button"><span>hanghou_pico</span><span>⌄</span></button>
+                        <div class="remote-select-menu hidden">
+                          <button class="remote-select-option active" data-value="hanghou_pico" type="button"><span>hanghou_pico</span><span>✓</span></button>
+                          <button class="remote-select-option" data-value="shanghai_pico" type="button"><span>shanghai_pico</span><span></span></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tracking-row">
+                      <span>Controller Device Name</span>
+                      <div class="remote-select" data-remote-select="controllerDeviceName">
+                        <button class="remote-select-button" type="button"><span>ctrl_test1</span><span>⌄</span></button>
+                        <div class="remote-select-menu hidden">
+                          <button class="remote-select-option active" data-value="ctrl_test1" type="button"><span>ctrl_test1</span><span>✓</span></button>
+                          <button class="remote-select-option" data-value="ctrl_test2" type="button"><span>ctrl_test2</span><span></span></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tracking-row">
+                      <span>Controller Password</span>
+                      <div class="remote-select" data-remote-select="controllerPassword">
+                        <button class="remote-select-button" type="button"><span>1389vabv84HVSD73</span><span>⌄</span></button>
+                        <div class="remote-select-menu hidden">
+                          <button class="remote-select-option active" data-value="1389vabv84HVSD73" type="button"><span>1389vabv84HVSD73</span><span>✓</span></button>
+                          <button class="remote-select-option" data-value="8moteDemoPass42" type="button"><span>8moteDemoPass42</span><span></span></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tracking-row">
+                      <span>Gateway ID</span>
+                      <div class="remote-select" data-remote-select="gatewayId">
+                        <button class="remote-select-button" type="button"><span>yushuM1</span><span>⌄</span></button>
+                        <div class="remote-select-menu hidden">
+                          <button class="remote-select-option active" data-value="yushuM1" type="button"><span>yushuM1</span><span>✓</span></button>
+                          <button class="remote-select-option" data-value="yushuM2" type="button"><span>yushuM2</span><span></span></button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </section>
 
@@ -2677,7 +2897,15 @@
     const languageMenu = document.getElementById("languageMenu");
     const languageLabel = document.getElementById("languageLabel");
     const welcomeWindow = document.getElementById("welcomeWindow");
-    const welcomeStartBtn = document.getElementById("welcomeStartBtn");
+    const welcomeNextBtn = document.getElementById("welcomeNextBtn");
+    const teleopModeWindow = document.getElementById("teleopModeWindow");
+    const teleopModeStartBtn = document.getElementById("teleopModeStartBtn");
+    const teleopModeButton = document.getElementById("teleopModeButton");
+    const teleopModeMenu = document.getElementById("teleopModeMenu");
+    const teleopModeLabel = document.getElementById("teleopModeLabel");
+    const trackingLanNetwork = document.getElementById("trackingLanNetwork");
+    const trackingRemoteNetwork = document.getElementById("trackingRemoteNetwork");
+    const importConfigBtn = document.getElementById("importConfigBtn");
     const guideWindow = document.getElementById("guideWindow");
     const settingsWindow = document.getElementById("settingsWindow");
     const aboutNav = document.getElementById("aboutNav");
@@ -2730,8 +2958,13 @@
       "Start Tracking": "开始追踪",
       "Connect Video": "连接视频",
       "Begin Teleop": "开始遥操作",
+      "Next": "下一步",
       "Get Started": "开始使用",
       "Don’t Show Again": "不再显示",
+      "Choosing Your Teleop Mode": "选择遥操模式",
+      "Teleop Mode": "遥操模式",
+      "LAN Teleoperation": "局域网遥操",
+      "Remote Teleoperation": "远程遥操",
       "Controller Guide": "控制器指南",
       "Left joystick": "左摇杆",
       "Move Forward / Back": "前进 / 后退",
@@ -2762,6 +2995,15 @@
       "Target Robot Name": "目标机器人名称",
       "Target Robot IP": "目标机器人 IP",
       "Target Robot Port": "目标机器人端口",
+      "Config File": "配置文件",
+      "Import Config File": "导入配置文件",
+      "Click To Import Config File": "点击导入配置文件",
+      "Remote Network": "远程网络",
+      "Project ID": "项目 ID",
+      "Controller Device ID": "控制器设备 ID",
+      "Controller Device Name": "控制器设备名称",
+      "Controller Password": "控制器密码",
+      "Gateway ID": "网关 ID",
       "Basic  Tracking": "基础追踪",
       "Head": "头部",
       "Hand": "手部",
@@ -2823,6 +3065,7 @@
       "Please enter a profile name.": "请输入配置名称。",
       "Duplicate name. Please rename.": "名称重复，请重命名。",
       "Profile Saved": "配置已保存",
+      "Config Imported": "配置已导入",
       "Apply a profile first.": "请先应用一个配置。",
       "Quick Start Success": "快速开始成功"
     };
@@ -2838,8 +3081,16 @@
     let activeLang = "en";
     let savedSceneLayout = null;
     const configuration = {
+      teleopMode: "lan",
       motionMode: null,
-      robotName: ""
+      robotName: "",
+      remoteNetwork: {
+        projectId: "ci4mrnzm8iitskq3",
+        controllerDeviceId: "hanghou_pico",
+        controllerDeviceName: "ctrl_test1",
+        controllerPassword: "1389vabv84HVSD73",
+        gatewayId: "yushuM1"
+      }
     };
     const translatableTextNodes = [];
 
@@ -3066,9 +3317,55 @@
 
     function dismissWelcome(openSettingsAfter = false) {
       welcomeWindow.classList.add("closed");
+      teleopModeWindow.classList.add("closed");
       if (openSettingsAfter) {
         openSettings("general");
       }
+    }
+
+    function showTeleopModeWindow() {
+      welcomeWindow.classList.add("closed");
+      teleopModeWindow.classList.remove("closed");
+    }
+
+    function getTeleopModeLabel(mode) {
+      return mode === "remote" ? "Remote Teleoperation" : "LAN Teleoperation";
+    }
+
+    function updateTeleopModeUi() {
+      const label = getTeleopModeLabel(configuration.teleopMode);
+      teleopModeLabel.textContent = t(label);
+      document.querySelectorAll("[data-teleop-card]").forEach((card) => {
+        card.classList.toggle("active", card.dataset.teleopCard === configuration.teleopMode);
+      });
+      document.querySelectorAll(".teleop-option").forEach((option) => {
+        const selected = option.dataset.teleopMode === configuration.teleopMode;
+        option.classList.toggle("active", selected);
+        option.querySelector("span:last-child").textContent = selected ? "✓" : "";
+      });
+      trackingLanNetwork.classList.toggle("hidden", configuration.teleopMode === "remote");
+      trackingRemoteNetwork.classList.toggle("hidden", configuration.teleopMode !== "remote");
+      teleopModeMenu.classList.add("hidden");
+    }
+
+    function setTeleopMode(mode) {
+      configuration.teleopMode = mode === "remote" ? "remote" : "lan";
+      updateTeleopModeUi();
+      updateCurrentConfigurationMeta();
+    }
+
+    function setRemoteSelectValue(key, value) {
+      const control = document.querySelector(`[data-remote-select="${key}"]`);
+      if (!control) return;
+      configuration.remoteNetwork[key] = value;
+      const buttonLabel = control.querySelector(".remote-select-button span:first-child");
+      if (buttonLabel) buttonLabel.textContent = value;
+      control.querySelectorAll(".remote-select-option").forEach((option) => {
+        const selected = option.dataset.value === value;
+        option.classList.toggle("active", selected);
+        option.querySelector("span:last-child").textContent = selected ? "✓" : "";
+      });
+      control.querySelector(".remote-select-menu")?.classList.add("hidden");
     }
 
     function setVstState(on) {
@@ -3084,10 +3381,12 @@
 
     function getConfigurationSnapshot() {
       return {
+        teleopMode: configuration.teleopMode,
         motionMode: configuration.motionMode,
         robotName: configuration.robotName.trim(),
         robotIp: targetRobotIp.value.trim(),
         robotPort: targetRobotPort.value.trim(),
+        remoteNetwork: { ...configuration.remoteNetwork },
         trackingSwitches: trackingSwitches.reduce((values, button) => {
           values[button.dataset.trackingSwitch] = button.classList.contains("on");
           return values;
@@ -3115,12 +3414,16 @@
 
     function applyConfigurationSnapshot(snapshot) {
       if (!snapshot) return;
+      setTeleopMode(snapshot.teleopMode || "lan");
       const robotName = (snapshot.robotName || "").slice(0, 30);
       targetRobotName.value = robotName;
       targetRobotIp.value = snapshot.robotIp || targetRobotIp.value;
       targetRobotPort.value = snapshot.robotPort || targetRobotPort.value;
       localListenPort.value = snapshot.localListenPort || localListenPort.value;
       configuration.robotName = robotName;
+      if (snapshot.remoteNetwork) {
+        Object.entries(snapshot.remoteNetwork).forEach(([key, value]) => setRemoteSelectValue(key, value));
+      }
 
       if (snapshot.motionMode) {
         setMotionMode(snapshot.motionMode);
@@ -3268,6 +3571,7 @@
         option.querySelector("span:last-child").textContent = selected ? "✓" : "";
       });
       languageMenu.classList.add("hidden");
+      updateTeleopModeUi();
       setTrackerNumber(trackerSelectLabel.dataset.value || trackerSelectLabel.textContent);
       setRenderMode(renderButton.dataset.value || renderLabel.dataset.value || "Full");
       setSceneRenderMode(document.querySelector(".scene-render-option.active")?.dataset.sceneRender || "Full");
@@ -3413,7 +3717,45 @@
       button.addEventListener("click", () => closeWindow(button.dataset.closeWindow));
     });
 
-    welcomeStartBtn.addEventListener("click", () => dismissWelcome(true));
+    welcomeNextBtn.addEventListener("click", showTeleopModeWindow);
+    teleopModeStartBtn.addEventListener("click", () => dismissWelcome(true));
+
+    document.querySelectorAll("[data-teleop-card]").forEach((card) => {
+      card.addEventListener("click", () => setTeleopMode(card.dataset.teleopCard));
+    });
+
+    teleopModeButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      teleopModeMenu.classList.toggle("hidden");
+    });
+
+    document.querySelectorAll(".teleop-option").forEach((option) => {
+      option.addEventListener("click", () => setTeleopMode(option.dataset.teleopMode));
+    });
+
+    importConfigBtn.addEventListener("click", () => {
+      Object.entries(configuration.remoteNetwork).forEach(([key, value]) => setRemoteSelectValue(key, value));
+      showToast("success", "Config Imported");
+    });
+
+    document.querySelectorAll(".remote-select-button").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const menu = button.closest(".remote-select")?.querySelector(".remote-select-menu");
+        document.querySelectorAll(".remote-select-menu").forEach((item) => {
+          if (item !== menu) item.classList.add("hidden");
+        });
+        menu?.classList.toggle("hidden");
+      });
+    });
+
+    document.querySelectorAll(".remote-select-option").forEach((option) => {
+      option.addEventListener("click", () => {
+        const control = option.closest(".remote-select");
+        if (!control) return;
+        setRemoteSelectValue(control.dataset.remoteSelect, option.dataset.value);
+      });
+    });
 
     document.querySelectorAll(".switch").forEach((toggle) => {
       toggle.addEventListener("click", (event) => {
@@ -3511,6 +3853,12 @@
       if (!event.target.closest(".language-control")) {
         languageMenu.classList.add("hidden");
       }
+      if (!event.target.closest(".teleop-control")) {
+        teleopModeMenu.classList.add("hidden");
+      }
+      if (!event.target.closest(".remote-select")) {
+        document.querySelectorAll(".remote-select-menu").forEach((menu) => menu.classList.add("hidden"));
+      }
       if (!event.target.closest(".tracker-select")) {
         trackerMenu.classList.add("hidden");
       }
@@ -3571,6 +3919,7 @@
 
     makeDraggable(settingsWindow);
     makeDraggable(welcomeWindow);
+    makeDraggable(teleopModeWindow);
     makeDraggable(guideWindow);
     sceneStreams.forEach(makeDraggable);
     sceneStreams.forEach(makeResizable);
@@ -3579,6 +3928,7 @@
     setTrackerNumber("2");
     setRenderMode("Full");
     setSceneRenderMode("Full");
+    setTeleopMode("lan");
     setVstState(true);
     setGuideState(false);
     updateCurrentConfigurationMeta();
