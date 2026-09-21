@@ -2981,6 +2981,8 @@
       "Teleop Mode": "遥操模式",
       "LAN Teleoperation": "局域网遥操",
       "Remote Teleoperation": "远程遥操",
+      "LAN": "局域网",
+      "Remote": "远程",
       "Controller Guide": "控制器指南",
       "Left joystick": "左摇杆",
       "Move Forward / Back": "前进 / 后退",
@@ -3481,11 +3483,12 @@
       }
 
       const motionLabel = snapshot.motionMode === "full" ? "Full Body" : "Independent";
+      const teleopLabel = snapshot.teleopMode === "remote" ? "Remote" : "LAN";
       const robotName = snapshot.robotName || "Unnamed Robot";
       const streamCount = snapshot.streamCount || 0;
       const streamText = streamCount === 1 ? (activeLang === "zh" ? "1 路视频流" : "1 Stream") : (activeLang === "zh" ? `${streamCount} 路视频流` : `${streamCount} Streams`);
       const protocol = snapshot.protocol || "";
-      return `${t(robotName)} | ${t(motionLabel)} | ${streamText} · ${protocol}`;
+      return `${t(teleopLabel)} | ${t(robotName)} | ${t(motionLabel)} | ${streamText} · ${protocol}`;
     }
 
     function getCurrentConfigurationMeta() {
