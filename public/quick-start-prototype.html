@@ -406,7 +406,7 @@
     }
 
     .welcome-start {
-      min-width: 292px;
+      width: 292px;
       height: 76px;
       border-radius: 16px;
       font-size: 28px;
@@ -583,8 +583,8 @@
     .shell {
       position: relative;
       width: min(1280px, calc(100vw - 56px));
-      height: min(860px, calc(100vh - 56px));
-      min-height: 760px;
+      height: min(940px, calc(100vh - 28px));
+      min-height: 840px;
       display: grid;
       grid-template-columns: 390px 1fr;
       overflow: visible;
@@ -950,6 +950,7 @@
     .remote-select-menu {
       width: 272px;
       top: 58px;
+      z-index: 80;
       border-radius: 20px;
     }
 
@@ -1023,9 +1024,16 @@
     }
 
     .tracking-card {
-      overflow: hidden;
       border-radius: 22px;
       background: var(--row);
+    }
+
+    .tracking-card.clipped {
+      overflow: hidden;
+    }
+
+    .tracking-card.remote-network-card {
+      overflow: visible;
     }
 
     .tracking-row {
@@ -1556,6 +1564,14 @@
 
     .btn.primary {
       background: var(--blue);
+    }
+
+    .btn.welcome-start {
+      width: 292px;
+      min-width: 292px;
+      height: 76px;
+      border-radius: 16px;
+      font-size: 28px;
     }
 
     .btn.primary:hover {
@@ -2422,7 +2438,7 @@
       <h1 class="teleop-mode-title">Choosing Your Teleop Mode</h1>
 
       <div class="teleop-mode-grid" aria-label="Teleoperation mode choices">
-        <button class="teleop-mode-card active" data-teleop-card="lan" type="button" aria-label="LAN Teleoperation">
+        <button class="teleop-mode-card" data-teleop-card="lan" type="button" aria-label="LAN Teleoperation">
           <img src="assets/setting-bar/teleop-lan.png" alt="" />
           <span>LAN Teleoperation</span>
         </button>
@@ -2639,7 +2655,7 @@
                   </div>
 
                   <h2 class="tracking-group-title" style="margin-top: 32px;">Remote Network</h2>
-                  <div class="tracking-card">
+                  <div class="tracking-card remote-network-card">
                     <div class="tracking-row">
                       <span>Project ID</span>
                       <div class="remote-select" data-remote-select="projectId">
@@ -3080,6 +3096,7 @@
     let lastSavedName = "";
     let activeLang = "en";
     let savedSceneLayout = null;
+    let teleopWelcomeChoice = null;
     const configuration = {
       teleopMode: "lan",
       motionMode: null,
@@ -3326,6 +3343,8 @@
     function showTeleopModeWindow() {
       welcomeWindow.classList.add("closed");
       teleopModeWindow.classList.remove("closed");
+      teleopWelcomeChoice = null;
+      updateTeleopModeUi();
     }
 
     function getTeleopModeLabel(mode) {
@@ -3336,7 +3355,7 @@
       const label = getTeleopModeLabel(configuration.teleopMode);
       teleopModeLabel.textContent = t(label);
       document.querySelectorAll("[data-teleop-card]").forEach((card) => {
-        card.classList.toggle("active", card.dataset.teleopCard === configuration.teleopMode);
+        card.classList.toggle("active", card.dataset.teleopCard === teleopWelcomeChoice);
       });
       document.querySelectorAll(".teleop-option").forEach((option) => {
         const selected = option.dataset.teleopMode === configuration.teleopMode;
@@ -3721,7 +3740,10 @@
     teleopModeStartBtn.addEventListener("click", () => dismissWelcome(true));
 
     document.querySelectorAll("[data-teleop-card]").forEach((card) => {
-      card.addEventListener("click", () => setTeleopMode(card.dataset.teleopCard));
+      card.addEventListener("click", () => {
+        teleopWelcomeChoice = card.dataset.teleopCard;
+        setTeleopMode(card.dataset.teleopCard);
+      });
     });
 
     teleopModeButton.addEventListener("click", (event) => {
